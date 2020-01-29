@@ -2,19 +2,34 @@ import React, { useState, useContext } from "react";
 import { Store } from "../Store";
 
 const TabItemForm = ({ setView }) => {
-  const [priceInBulk, setPriceInBulk] = useState(undefined);
+  const [costInBulk, setCostInBulk] = useState(undefined);
   const [itemName, setItemName] = useState("");
+  const [cost, setCost] = useState(0);
   const [itemQty, setItemQty] = useState(1);
-  const [cost, setCost] = useState(undefined);
 
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const addDispatch = (item) => dispatch({ type: 'ADD_TAB_ITEM', payload: item });
 
+  // if costInBulk is undefined => invalid
+  let validCostInBulk = costInBulk === undefined ? false : true;
+  // if item name is "" => invalid
+  let validItemName = itemName === "" ? false : true;
+  // if cost is 0 or less than 0 or undefined => invalid
+  let validCost = cost <= 0 ? false : true;  
+  // if item qty is 0 or less than 0 => invalid
+  let validItemQty = itemQty <= 0 ? false : true;
+
+  let validInputs =  validCostInBulk && validItemName && validCost && validItemQty;
+
   const addItem = (e) => {
+    //  CONSOLE LOG STATE HERE
+    console.log('[STATE FROM TAB ITEM FORM ADD ITEM]');
+    console.log(state);
+
     e.preventDefault();
     let indCost, bulkCost;
 
-    if (priceInBulk) {
+    if (costInBulk) {
       indCost = cost / itemQty;
       bulkCost = cost;
     } else {
@@ -23,19 +38,15 @@ const TabItemForm = ({ setView }) => {
     }
 
     const newItem = {
-      qty: itemQty,
       indCost,
+      qty: itemQty,
       name: itemName,
       cost: bulkCost,
+      userInputCost: costInBulk ? 'bulk' : 'individual'
     };
 
-    console.log(newItem);
-
-    // dispatch new item info and add to state in store
     addDispatch(newItem);
-    // send back to tab list
     setView("tabList");
-    // ver si se borro local state de este componente o si no borrarlo
   }
 
   return (
@@ -54,6 +65,7 @@ const TabItemForm = ({ setView }) => {
         <br/>
 
         QUANTITY:
+        {/* STYLING set minimum value to 1*/}
         <input 
           type="number" 
           value={itemQty} 
@@ -66,17 +78,18 @@ const TabItemForm = ({ setView }) => {
         <input 
           type="radio" 
           name="costType" 
-          onChange={() => setPriceInBulk(true)}
+          onChange={() => setCostInBulk(true)}
         />
-            Per bulk
+          Per bulk
         <input 
           type="radio" 
           name="costType"
-          onChange={() => setPriceInBulk(false)} 
+          onChange={() => setCostInBulk(false)} 
         />
           Per item
 
-        {priceInBulk !== undefined && (
+        {/*STYLING set minimum input to 0 */}
+        {costInBulk !== undefined && (
           <input 
             value={cost} 
             type="number" 
@@ -85,8 +98,7 @@ const TabItemForm = ({ setView }) => {
           />
         )}
 
-
-        <button type="submit" onClick={(e) => addItem(e)}>
+        <button type="submit" onClick={(e) => addItem(e)} disabled={!validInputs}>
           ADD ITEM
         </button>
       </form>
@@ -99,5 +111,3 @@ const TabItemForm = ({ setView }) => {
 };
 
 export default TabItemForm;
-
-// error boundary tab item form

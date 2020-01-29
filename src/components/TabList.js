@@ -1,15 +1,20 @@
 // DINNER MODE 
-import React from "react";
+import React, { useContext } from "react";
 import TabItem from "./TabItem";
+import { Store } from "../Store";
 
 const styles = {
   flexDirection: "row",
+  textAlign: "center",
   background: "black",
   color: "white",
-  textAlign: "center",
 }
 
 const TabList = ({ landing, setView, data }) => {
+  const { dispatch } = useContext(Store);
+  const deleteItem = (itemKey) => dispatch({ type: "DELETE_TAB_ITEM", payload: itemKey });
+  const editItem = (itemKey) => dispatch({ type: "EDIT_TAB_ITEM", payload: itemKey })
+ 
   return (
     <React.Fragment>
       <h2>
@@ -25,9 +30,15 @@ const TabList = ({ landing, setView, data }) => {
       </div>
 
       {/* DISPLAYS THE TOTAL TAB ITEMS IN A LIST MAPPING <TABITEM> */}
-      <ul>
-        {data.dinner.items.map(el => <TabItem key={el.name} data={el}/>)}
-      </ul>
+      {data.dinner.items.map(el => 
+        <TabItem 
+          setView={() => setView("tabItemEdit")}
+          deleteItem={deleteItem}
+          editItem={editItem} 
+          key={el.name} 
+          data={el} 
+        />
+      )}
 
       {/* 
         HAS AN ADD ITEMS BUTTON <ADD ITEM> 
@@ -42,6 +53,5 @@ const TabList = ({ landing, setView, data }) => {
 export default TabList;
 
 
-// delete item
 // edit item
 // expandir item (?)
