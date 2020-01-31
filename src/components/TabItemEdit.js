@@ -6,20 +6,29 @@ const TabItemEdit = ({ setView, itemToEdit }) => {
   const [itemName, setItemName] = useState(itemToEdit.name);
   const [cost, setCost] = useState(itemToEdit.userInputCost === 'bulk' ? itemToEdit.cost : itemToEdit.indCost);
   const [itemQty, setItemQty] = useState(itemToEdit.qty);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const { state, dispatch } = useContext(Store);
   const updateDispatch = (item) => dispatch({ type: 'UPDATE_TAB_ITEM', payload: item });
 
-
   const updateItem = (e) => {
     e.preventDefault();
+
+    // let itemIsDuplicate = state.dinner.items.filter(el => el.name === itemName).length === 0 ? false : true;
+    // TAB ITEM EDIT, IF NEW ITEM NAME IS NOT IN ITEMS
+    // let test = items.filter(el => el.name === "cow");
+// empty array is valid, not empty array is not valid;
+
+    
+    // if duplicateItem is false
+    // execute this
     let indCost, bulkCost;
 
     if (costInBulk) {
-      indCost = cost / itemQty;
+      indCost = (cost / itemQty).toFixed(2);
       bulkCost = cost;
     } else {
-      bulkCost = cost * itemQty;
+      bulkCost = (cost * itemQty).toFixed(2);
       indCost = cost;
     }
 
@@ -28,18 +37,14 @@ const TabItemEdit = ({ setView, itemToEdit }) => {
       qty: itemQty,
       name: itemName,
       cost: bulkCost,
-      userInputCost: costInBulk ? 'bulk' : 'individual'
+      userInputCost: costInBulk
     };
 
     updateDispatch(newItem);
     setView("tabList");
-  }
-
-  // TEST
-  const back2List = () => {
-    console.log('[STATE FROM TAB ITEM EDIT TRIGGERED BY BACK TO LIST]');
-    console.log(state);
-    setView("tabList");
+    // else //
+      // error message
+    //
   }
 
   let validCostInBulk = costInBulk === undefined ? false : true;
@@ -75,15 +80,15 @@ const TabItemEdit = ({ setView, itemToEdit }) => {
         <input 
           type="radio" 
           name="costType" 
-          checked={itemToEdit.userInputCost === 'bulk' ? true : false}
           onChange={() => setCostInBulk('bulk')}
+          checked={costInBulk === 'bulk' ? true : false}
         />
           Per bulk
         <input 
           type="radio" 
           name="costType"
-          checked={itemToEdit.userInputCost === 'individual' ? true : false}
           onChange={() => setCostInBulk('individual')} 
+          checked={costInBulk === 'individual' ? true : false}
         />
           Per item
 
@@ -94,14 +99,12 @@ const TabItemEdit = ({ setView, itemToEdit }) => {
           onChange={(e) => setCost(Number(e.target.value))}
         />
 
-        {/* CHANGE ADD ITEM TO UPDATEDITEM */}
         <button type="submit" onClick={(e) => updateItem(e)} disabled={!validInputs}>
           SAVE CHANGES
         </button>
       </form>
 
-      {/* <h2 onClick={() => setView("tabList")}>BACK TO LIST</h2> */}
-      <h2 onClick={() => back2List()}>BACK TO LIST</h2>
+      <h2 onClick={() => setView("tabList")}>BACK TO LIST</h2>
     </React.Fragment>
   );
 };

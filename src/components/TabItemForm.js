@@ -6,47 +6,45 @@ const TabItemForm = ({ setView }) => {
   const [itemName, setItemName] = useState("");
   const [cost, setCost] = useState(0);
   const [itemQty, setItemQty] = useState(1);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const { state, dispatch } = useContext(Store);
   const addDispatch = (item) => dispatch({ type: 'ADD_TAB_ITEM', payload: item });
 
-  // if costInBulk is undefined => invalid
   let validCostInBulk = costInBulk === undefined ? false : true;
-  // if item name is "" => invalid
   let validItemName = itemName === "" ? false : true;
-  // if cost is 0 or less than 0 or undefined => invalid
-  let validCost = cost <= 0 ? false : true;  
-  // if item qty is 0 or less than 0 => invalid
   let validItemQty = itemQty <= 0 ? false : true;
+  let validCost = cost <= 0 ? false : true;  
 
   let validInputs =  validCostInBulk && validItemName && validCost && validItemQty;
 
   const addItem = (e) => {
-    //  CONSOLE LOG STATE HERE
-    console.log('[STATE FROM TAB ITEM FORM ADD ITEM]');
-    console.log(state);
-
     e.preventDefault();
     let indCost, bulkCost;
+    let itemIsDuplicate = state.dinner.items.filter(el => el.name === itemName).length === 0 ? false : true;
 
-    if (costInBulk) {
-      indCost = cost / itemQty;
-      bulkCost = cost;
+    if (itemIsDuplicate) {
+      setErrorMsg(true);
     } else {
-      bulkCost = cost * itemQty;
-      indCost = cost;
+      if (costInBulk) {
+        indCost = (cost / itemQty).toFixed(2);
+        bulkCost = cost;
+      } else {
+        bulkCost = (cost * itemQty).toFixed(2);
+        indCost = cost;
+      }
+  
+      const newItem = {
+        indCost,
+        qty: itemQty,
+        name: itemName,
+        cost: bulkCost,
+        userInputCost: costInBulk ? 'bulk' : 'individual'
+      };
+  
+      addDispatch(newItem);
+      setView("tabList");
     }
-
-    const newItem = {
-      indCost,
-      qty: itemQty,
-      name: itemName,
-      cost: bulkCost,
-      userInputCost: costInBulk ? 'bulk' : 'individual'
-    };
-
-    addDispatch(newItem);
-    setView("tabList");
   }
 
   return (
@@ -106,6 +104,15 @@ const TabItemForm = ({ setView }) => {
       <h5 onClick={() => setView("tabList")}>
         Back to list
       </h5>
+
+      {/* ERROR MESSAGE COMPONENT IN CASE OF DUPLICATION */}
+      {errorMsg && (
+        <div style={{background: "orange"}}>
+          <h2>
+            AN ITEM WITH THAT NAME IS ALREADY LOGGED
+          </h2>
+        </div>
+      )}
     </React.Fragment>
   );
 };

@@ -26,6 +26,7 @@ function reducer (state, action) {
 
     case 'EDIT_TAB_ITEM':
       let itemToEdit = state.dinner.items.filter(el => el.name === action.payload);
+      // if there is 
       return { ...state, dinner: { ...state.dinner, itemToEdit: itemToEdit[0] } };
 
     case 'UPDATE_TAB_ITEM':
