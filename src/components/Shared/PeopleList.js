@@ -1,7 +1,9 @@
 // IDEALLY FOR BOTH MODES
 // STYLE AND FUNCTIONALITY DEFINED BY MODE
 
-import React from "react";
+import React, { useContext } from "react";
+import Person from "./Person";
+import { Store } from "../../Store";
 
 const styles = {
   flexDirection: "row",
@@ -10,9 +12,13 @@ const styles = {
   textAlign: "center",
 }
 
-const PeopleList = ({ setView, landing }) => {
+const PeopleList = ({ setView, landing, data }) => {
+  const { dispatch } = useContext(Store);
+  const deletePerson = (personKey) => dispatch({ type: 'DELETE_PERSON', payload: personKey });
+  const editPerson = (personKey) => dispatch({ type: 'EDIT_PERSON', payload: personKey });
+
   return (
-    <div>
+    <React.Fragment>
       <h2>
         2. PEOPLE LIST
       </h2>
@@ -27,7 +33,25 @@ const PeopleList = ({ setView, landing }) => {
           GET RESULTS >>
         </h3>
       </div>
-    </div>
+
+
+      {/* DISPLAYS THE TOTAL PEOPLE IN A LIST MAPPING <PERSON> */}
+      {data.people.loggedPersons.map(el => 
+        <Person 
+          data={el}
+          key={el.name}
+          editPerson={editPerson}
+          deletePerson={deletePerson}
+          setView={() => setView("personEdit")}
+        /> 
+      )}
+
+      {/* 
+        HAS AN ADD PERSON BUTTON <ADD PERSON> 
+        if clicked => takes to PERSONform <ADD PERSON FORM>
+      */}
+      <button onClick={() => setView("personForm")}>Add Person</button>
+    </React.Fragment>
   );
 };
 

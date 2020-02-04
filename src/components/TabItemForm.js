@@ -1,20 +1,16 @@
-import React, { useState, useContext } from "react";
-import { Store } from "../Store";
+import React, { useState } from "react";
 
-const TabItemForm = ({ setView }) => {
-  const [costInBulk, setCostInBulk] = useState(undefined);
-  const [itemName, setItemName] = useState("");
+const TabItemForm = ({ setView, state, addDispatch }) => {
   const [cost, setCost] = useState(0);
   const [itemQty, setItemQty] = useState(1);
+  const [itemName, setItemName] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
+  const [costInBulk, setCostInBulk] = useState(undefined);
 
-  const { state, dispatch } = useContext(Store);
-  const addDispatch = (item) => dispatch({ type: 'ADD_TAB_ITEM', payload: item });
-
-  let validCostInBulk = costInBulk === undefined ? false : true;
-  let validItemName = itemName === "" ? false : true;
-  let validItemQty = itemQty <= 0 ? false : true;
   let validCost = cost <= 0 ? false : true;  
+  let validItemQty = itemQty <= 0 ? false : true;
+  let validItemName = itemName === "" ? false : true;
+  let validCostInBulk = costInBulk === undefined ? false : true;
 
   let validInputs =  validCostInBulk && validItemName && validCost && validItemQty;
 
@@ -27,18 +23,18 @@ const TabItemForm = ({ setView }) => {
       setErrorMsg(true);
     } else {
       if (costInBulk) {
-        indCost = (cost / itemQty).toFixed(2);
+        indCost = (cost / itemQty);
         bulkCost = cost;
       } else {
-        bulkCost = (cost * itemQty).toFixed(2);
+        bulkCost = (cost * itemQty);
         indCost = cost;
       }
   
       const newItem = {
-        indCost,
-        qty: itemQty,
+        indCost: +indCost.toFixed(2),
+        qty: +itemQty,
         name: itemName,
-        cost: bulkCost,
+        cost: +bulkCost.toFixed(2),
         userInputCost: costInBulk ? 'bulk' : 'individual'
       };
   

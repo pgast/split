@@ -32,11 +32,11 @@ const TabList = ({ landing, setView, data }) => {
       {/* DISPLAYS THE TOTAL TAB ITEMS IN A LIST MAPPING <TABITEM> */}
       {data.dinner.items.map(el => 
         <TabItem 
-          setView={() => setView("tabItemEdit")}
-          deleteItem={deleteItem}
-          editItem={editItem} 
-          key={el.name} 
           data={el} 
+          key={el.name} 
+          editItem={editItem} 
+          deleteItem={deleteItem}
+          setView={() => setView("tabItemEdit")}
         />
       )}
 
@@ -51,7 +51,3 @@ const TabList = ({ landing, setView, data }) => {
 };
 
 export default TabList;
-
-
-// edit item
-// expandir item (?)

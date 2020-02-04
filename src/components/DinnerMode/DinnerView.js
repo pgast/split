@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ResultsView from "../Shared/ResultsView";
 import PeopleList from "../Shared/PeopleList";
 import TabItemForm from "../TabItemForm";
 import TabItemEdit from "../TabItemEdit";
+import PersonEdit from "../Shared/PersonEdit";
+import PersonForm from "../Shared/PersonForm";
 import TabList from "../TabList";
+import { Store } from "../../Store";
 
 const DinnerView = ({ toggleMode, data }) => {
   const [view, setView] = useState("tabList");
+
+  const { dispatch } = useContext(Store);
+  const addDispatch = (item) => dispatch({ type: 'ADD_TAB_ITEM', payload: item });
+  const addPerson = (person) => dispatch({ type: "ADD_PERSON", payload: person });
 
   return (
     <React.Fragment>
@@ -23,18 +30,19 @@ const DinnerView = ({ toggleMode, data }) => {
         <ResultsView setView={setView} landing={() => toggleMode("landing")} data={data}/>
       )}
       {view === "tabItemForm" && (
-        <TabItemForm setView={setView}/>
+        <TabItemForm setView={setView} state={data} addDispatch={addDispatch}/>
       )}
       {view === "tabItemEdit" && (
-        <TabItemEdit setView={setView} itemToEdit={data.dinner.itemToEdit}/>
+        <TabItemEdit setView={setView} itemToEdit={data.dinner.itemToEdit} state={data} addDispatch={addDispatch}/>
+      )}
+      {view === "personEdit" && (
+        <PersonEdit setView={setView} personToEdit={data.people.personToEdit} state={data} addPersonDispatch={addPerson}/>
+      )}
+      {view === "personForm" && (
+        <PersonForm setView={setView} state={data} addPersonDispatch={addPerson} />
       )}
     </React.Fragment>
   );
 };
 
 export default DinnerView;
-
-// IF TAB ITEM IS CLICKED IN EDIT
-// trigger dispatch with the key of the tab item to be edited
-// dispatch triggers a state update that flips editTabItem to true
-// if editTabItem is true it will display tabItemForm with the item info to edit

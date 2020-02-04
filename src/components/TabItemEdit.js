@@ -1,58 +1,52 @@
-import React, { useState, useContext } from "react";
-import { Store } from "../Store";
+import React, { useState } from "react";
 
-const TabItemEdit = ({ setView, itemToEdit }) => {
-  const [costInBulk, setCostInBulk] = useState(itemToEdit.userInputCost);
-  const [itemName, setItemName] = useState(itemToEdit.name);
-  const [cost, setCost] = useState(itemToEdit.userInputCost === 'bulk' ? itemToEdit.cost : itemToEdit.indCost);
-  const [itemQty, setItemQty] = useState(itemToEdit.qty);
+const TabItemEdit = ({ setView, itemToEdit, addDispatch, state }) => {
   const [errorMsg, setErrorMsg] = useState(false);
+  const [itemQty, setItemQty] = useState(itemToEdit.qty);
+  const [itemName, setItemName] = useState(itemToEdit.name);
+  const [costInBulk, setCostInBulk] = useState(itemToEdit.userInputCost);
+  const [cost, setCost] = useState(itemToEdit.userInputCost === 'bulk' ? itemToEdit.cost : itemToEdit.indCost);
 
-  const { state, dispatch } = useContext(Store);
-  const updateDispatch = (item) => dispatch({ type: 'UPDATE_TAB_ITEM', payload: item });
+  let prevItemCopy = {...itemToEdit};
+  let validCost = cost <= 0 ? false : true;  
+  let validItemQty = itemQty <= 0 ? false : true;
+  let validItemName = itemName === "" ? false : true;
+  let validInputs = validItemName && validCost && validItemQty;
+
+  const backToList = () => {
+    addDispatch(prevItemCopy);
+    setView("tabList");
+  }
 
   const updateItem = (e) => {
     e.preventDefault();
 
-    // let itemIsDuplicate = state.dinner.items.filter(el => el.name === itemName).length === 0 ? false : true;
-    // TAB ITEM EDIT, IF NEW ITEM NAME IS NOT IN ITEMS
-    // let test = items.filter(el => el.name === "cow");
-// empty array is valid, not empty array is not valid;
-
-    
-    // if duplicateItem is false
-    // execute this
+    let itemIsDuplicate = state.dinner.items.filter(el => el.name === itemName).length === 0 ? false : true;
     let indCost, bulkCost;
 
-    if (costInBulk) {
-      indCost = (cost / itemQty).toFixed(2);
-      bulkCost = cost;
+    if (itemIsDuplicate) {
+      setErrorMsg(true);
     } else {
-      bulkCost = (cost * itemQty).toFixed(2);
-      indCost = cost;
+      if (costInBulk === "bulk") {
+        indCost = (cost / itemQty);
+        bulkCost = cost;
+      } else {
+        bulkCost = (cost * itemQty);
+        indCost = cost;
+      }
+
+      const newItem = {
+        indCost: +indCost.toFixed(2),
+        qty: +itemQty,
+        name: itemName,
+        cost: +bulkCost.toFixed(2),
+        userInputCost: costInBulk
+      };
+  
+      addDispatch(newItem);
+      setView("tabList");
     }
-
-    const newItem = {
-      indCost,
-      qty: itemQty,
-      name: itemName,
-      cost: bulkCost,
-      userInputCost: costInBulk
-    };
-
-    updateDispatch(newItem);
-    setView("tabList");
-    // else //
-      // error message
-    //
   }
-
-  let validCostInBulk = costInBulk === undefined ? false : true;
-  let validItemName = itemName === "" ? false : true;
-  let validItemQty = itemQty <= 0 ? false : true;
-  let validCost = cost <= 0 ? false : true;  
-
-  let validInputs =  validCostInBulk && validItemName && validCost && validItemQty;
 
   return (
     <React.Fragment>
@@ -67,7 +61,6 @@ const TabItemEdit = ({ setView, itemToEdit }) => {
         <br/>
 
         QUANTITY:
-        {/* STYLING set minimum value to 1*/}
         <input 
           type="number" 
           value={itemQty} 
@@ -104,7 +97,19 @@ const TabItemEdit = ({ setView, itemToEdit }) => {
         </button>
       </form>
 
-      <h2 onClick={() => setView("tabList")}>BACK TO LIST</h2>
+      <h2 onClick={() => backToList()}>BACK TO LIST</h2>
+
+       {/* 
+          ERROR MESSAGE COMPONENT IN CASE OF DUPLICATION 
+          WORK ON SOLUTION THAT ERROR MESSAGE DISAPPEARS IF USER TYPES DIFFERENT THING
+       */}
+       {errorMsg && (
+        <div style={{background: "orange"}}>
+          <h2>
+            AN ITEM WITH THAT NAME IS ALREADY LOGGED
+          </h2>
+        </div>
+      )}
     </React.Fragment>
   );
 };
