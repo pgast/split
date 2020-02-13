@@ -4,13 +4,10 @@ const Landing = ({ toggleMode }) => {
   return (
     <div>
       <h1>
-        Select Mode:
+        LANDING
       </h1>
-      <h3 onClick={() => toggleMode("dinner")}>
-        Dinner
-      </h3>
-      <h3 onClick={() => toggleMode("event")}>
-        Event
+      <h3 onClick={() => toggleMode("workView")}>
+        Start WorkView
       </h3>
     </div>
   );

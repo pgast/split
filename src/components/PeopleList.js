@@ -1,9 +1,6 @@
-// IDEALLY FOR BOTH MODES
-// STYLE AND FUNCTIONALITY DEFINED BY MODE
-
 import React, { useContext } from "react";
 import Person from "./Person";
-import { Store } from "../../Store";
+import { Store } from "../Store";
 
 const styles = {
   flexDirection: "row",
@@ -18,7 +15,7 @@ const PeopleList = ({ setView, landing, data }) => {
   const editPerson = (personKey) => dispatch({ type: 'EDIT_PERSON', payload: personKey });
 
   return (
-    <React.Fragment>
+    <>
       <h2>
         2. PEOPLE LIST
       </h2>
@@ -26,9 +23,6 @@ const PeopleList = ({ setView, landing, data }) => {
         <h6 onClick={() => landing()}>
           LANDING
         </h6>
-        <h3 onClick={() => setView("tabList")}>
-          -- EDIT TAB ITEMS
-        </h3>
         <h3 onClick={() => setView("resultsView")}>
           GET RESULTS >>
         </h3>
@@ -51,7 +45,7 @@ const PeopleList = ({ setView, landing, data }) => {
         if clicked => takes to PERSONform <ADD PERSON FORM>
       */}
       <button onClick={() => setView("personForm")}>Add Person</button>
-    </React.Fragment>
+    </>
   );
 };
 

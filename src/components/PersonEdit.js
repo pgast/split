@@ -33,7 +33,7 @@ const PersonEdit = ({ setView, personToEdit, state, addPersonDispatch }) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <h5>
         PERSON EDIT
       </h5>
@@ -65,7 +65,7 @@ const PersonEdit = ({ setView, personToEdit, state, addPersonDispatch }) => {
           </h2>
         </div>
       )}
-    </React.Fragment>
+    </>
   );
 };
 
