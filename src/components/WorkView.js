@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import ResultsView from "./ResultsView";
 import PeopleList from "./PeopleList";
-import PersonEdit from "./PersonEdit";
 import PersonForm from "./PersonForm";
 import { Store } from "../Store";
 
@@ -33,10 +32,11 @@ const WorkView = ({ toggleMode, data }) => {
         <ResultsView setView={setView} landing={() => toggleMode("landing")} data={data}/>
       )}
       {view === "personEdit" && (
-        <PersonEdit setView={setView} personToEdit={data.people.personToEdit} state={data} addPersonDispatch={addPerson}/>
+        <PersonForm setView={setView} state={data} addPersonDispatch={addPerson} personEdit personToEdit={data.people.personToEdit}/>
       )}
+
       {view === "personForm" && (
-        <PersonForm setView={setView} state={data} addPersonDispatch={addPerson} />
+        <PersonForm setView={setView} state={data} addPersonDispatch={addPerson} personEdit={false} personToEdit={false}/>
       )}
     </>
   );
