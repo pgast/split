@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 
-// GET PROP THAT TELLS IF PERSONFORM IS IN EDIT PERSON OR CREATE NEW PERSON
-// IN EDIT MODE
-// initialize state with already known values
-// change add person to save changes
-// new function to update changes with new person
-
 export default function PersonForm({ setView, state, addPersonDispatch, personEdit, personToEdit }) {
   const [personName, setPersonName] = useState(personEdit ? personToEdit.name : "");
   const [items, setItems] = useState(personToEdit ? personToEdit.items : []);
@@ -86,6 +80,13 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
     };
   };
 
+  const backToPeopleList = () => {
+    if(personEdit) {
+      addPersonDispatch(personToEdit);
+    };
+    setView("peopleList") 
+  };
+
   return (
     <>
       <h1>Person Form</h1>
@@ -151,7 +152,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
         </button>
       </form>
 
-      <h5 onClick={() => setView("peopleList")}>
+      <h5 onClick={backToPeopleList}>
         Back to people list
       </h5>
 

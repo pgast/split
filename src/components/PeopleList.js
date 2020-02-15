@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import Person from "./Person";
-import { Store } from "../Store";
 
 const styles = {
   flexDirection: "row",
@@ -9,11 +8,7 @@ const styles = {
   textAlign: "center",
 }
 
-const PeopleList = ({ setView, landing, data }) => {
-  const { dispatch } = useContext(Store);
-  const deletePerson = (personKey) => dispatch({ type: 'DELETE_PERSON', payload: personKey });
-  const editPerson = (personKey) => dispatch({ type: 'EDIT_PERSON', payload: personKey });
-
+export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
   return (
     <>
       <h2>
@@ -28,8 +23,6 @@ const PeopleList = ({ setView, landing, data }) => {
         </h3>
       </div>
 
-
-      {/* DISPLAYS THE TOTAL PEOPLE IN A LIST MAPPING <PERSON> */}
       {data.people.loggedPersons.map(el => 
         <Person 
           data={el}
@@ -40,13 +33,7 @@ const PeopleList = ({ setView, landing, data }) => {
         /> 
       )}
 
-      {/* 
-        HAS AN ADD PERSON BUTTON <ADD PERSON> 
-        if clicked => takes to PERSONform <ADD PERSON FORM>
-      */}
       <button onClick={() => setView("personForm")}>Add Person</button>
     </>
   );
 };
-
-export default PeopleList;

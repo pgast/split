@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Landing = ({ toggleMode }) => {
+export default function Landing({ toggleMode }) {
   return (
     <div>
       <h1>
@@ -12,5 +12,3 @@ const Landing = ({ toggleMode }) => {
     </div>
   );
 };
-
-export default Landing;

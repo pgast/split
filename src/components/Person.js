@@ -1,6 +1,6 @@
 import React from "react";
 
-const Person = ({ data, editPerson, deletePerson, setView }) => {
+export default function Person({ data, editPerson, deletePerson, setView }) {
   const editCurrentPerson = (item) => {
     setView();
     editPerson(item);
@@ -8,9 +8,8 @@ const Person = ({ data, editPerson, deletePerson, setView }) => {
 
   return (
     <div style={{ background: 'cyan' }}>
-      <h5>
-        {data.name}
-      </h5>
+      <h4>{data.name}</h4>
+      <h5>{data.items.length} items.</h5>
       <button onClick={() => deletePerson(data.name)}>
         DELETE
       </button>
@@ -20,5 +19,3 @@ const Person = ({ data, editPerson, deletePerson, setView }) => {
     </div>
   );
 };
-
-export default Person;
