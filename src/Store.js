@@ -3,7 +3,8 @@ import React, { useReducer, createContext } from "react";
 const initialState = {
   mode: "landing",
   people: {
-    loggedPersons: [{name: "Joe", items: [{name: "beer", cost: 12}]}, {name: "Phil", items: [{name: "apples", cost: 23}]}],
+    loggedPersons: [{name: 'joe', items: [{name: 'shit', cost: 23}]}],
+    // loggedPersons: [],
     personToEdit: undefined,
   }
 };

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import ResultsView from "./ResultsView";
 import PeopleList from "./PeopleList";
 import PersonForm from "./PersonForm";
+import "../Styles.css";
 
 export default function WorkView({ toggleMode, data, addPersonDispatch, deletePersonDispatch, editPersonDispatch }) {
   const [view, setView] = useState("peopleList");
 
   return (
-    <>
+    <div className="workView">
       {view === "peopleList" && (
         <PeopleList 
           data={data} 
@@ -41,6 +42,6 @@ export default function WorkView({ toggleMode, data, addPersonDispatch, deletePe
           addPersonDispatch={addPersonDispatch} 
         />
       )}
-    </>
+    </div>
   );
 };

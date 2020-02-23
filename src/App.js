@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import WorkView from './components/WorkView';
 import Landing from './components/Landing';
+import './Styles.css';
 import { Store } from './Store';
 
 export default function App() {

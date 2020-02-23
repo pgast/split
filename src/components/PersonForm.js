@@ -9,6 +9,8 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
   const [editItemCost, setEditItemCost] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const [itemEditing, setItemEditing] = useState(false);
+  // const [addNameForm, setAddNameForm] = useState(personEdit ? false : true);
+  const [addNameForm, setAddNameForm] = useState(true);
 
   let validPersonName = personName === "" ? false : true;
   let validItems = items.length !== 0 ? true : false;
@@ -88,82 +90,107 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
   };
 
   return (
-    <>
-      <h1>Person Form</h1>
-      <form>
-        ENTER PERSON NAME:
-        <input 
-          type="text" 
-          value={personName} 
-          placeholder="Person Name" 
-          onChange={(e) => setPersonName(e.target.value)}
-        />
-        <br/>
-        <div style={{background: "orange"}}>
-          <input 
-            type="text" 
-            value={itemName} 
-            placeholder="Item Name" 
-            onChange={(e) => setItemName(e.target.value)}
-          />
-          <input 
-            type="number" 
-            value={itemCost} 
-            placeholder="Item Cost" 
-            onChange={(e) => setItemCost(e.target.value)}
-          />
-          <button onClick={(e) => addItem(e)} style={{ background: "black", color: "white" }} disabled={!validItem}>ADD ITEM</button>
+    <div className="personForm_container">
+      {/* NAVBAR */}
+      <div className="navbar">
+        <div className="back-btn" onClick={backToPeopleList}>
+          {'<'}
+        </div>
+        <div 
+          onClick={(e) => validInputs ? addPerson(e) : null}
+          className={validInputs ? "get-result-btn" : "get-result-btn-disabled"} 
+        >
+          {personEdit ? "SAVE CHANGES" : "ADD PERSON"}
+        </div>
+      </div>
+
+
+      {/* FORM CONTENT */}
+      <div className="form_content">
+        <div className={addNameForm ? "form_add_name_full" : "form_add_name_small"}>
+          <div className="name_input">
+            <input 
+              type="text" 
+              value={personName} 
+              placeholder="Add person name" 
+              onChange={(e) => setPersonName(e.target.value)}
+            />
+          </div>
+          {addNameForm && (
+            <div className="add-person-btn" onClick={() => setAddNameForm(false)}>
+              <h3>Add Items</h3>
+            </div>
+          )}
         </div>
 
-        {items.map(el => 
-          <div key={el.name} style={{background: "gray", margin: "42px"}}>
+        {/* ADD ITEM FORM, ITEM LIST AND ERROR MESSAGE*/}
+        {!addNameForm && (
+          <div className="item_container">
+            <div className="add_item_form">
+              <input 
+                type="text" 
+                value={itemName} 
+                placeholder="Item Name" 
+                onChange={(e) => setItemName(e.target.value)}
+              />
+              <input 
+                type="number" 
+                value={itemCost} 
+                placeholder="Item Cost" 
+                onChange={(e) => setItemCost(e.target.value)}
+              />
+              <button onClick={(e) => addItem(e)} style={{ background: "black", color: "white" }} disabled={!validItem}>ADD ITEM</button>
+            </div>
 
-            {itemEditing !== el.name && (
-              <span>{el.name} - ${el.cost}</span>
+            {/* add conditional rendering for list container */}
+            {items.map(el => 
+              <div key={el.name} style={{background: "gray", margin: "42px"}}>
+
+                {itemEditing !== el.name && (
+                  <span>{el.name} - ${el.cost}</span>
+                )}
+
+                {itemEditing === el.name && (
+                  <>
+                    <input 
+                      type="text" 
+                      value={editItemName} 
+                      placeholder="Item Name" 
+                      onChange={(e) => setEditItemName(e.target.value)}
+                    />
+                    <input 
+                      type="number" 
+                      value={editItemCost} 
+                      placeholder="Item Cost" 
+                      onChange={(e) => setEditItemCost(e.target.value)}
+                    />
+                  </>
+                )}
+
+                {itemEditing !== el.name && <h5 onClick={() => removeItem(el.name)}>DELETE</h5>}
+                {itemEditing !== el.name && <h5 onClick={() => toggleItemEdit(el)}>EDIT</h5>}
+
+                {itemEditing === el.name && <h5 onClick={() => saveItemChanges(el.name)}>SAVE CHANGES</h5>}
+                {itemEditing === el.name && <h5 onClick={() => setItemEditing(false)}>GO BACK</h5>}
+              </div>
             )}
+            {/* conditional rendering end */}
 
-            {itemEditing === el.name && (
-              <>
-                <input 
-                  type="text" 
-                  value={editItemName} 
-                  placeholder="Item Name" 
-                  onChange={(e) => setEditItemName(e.target.value)}
-                />
-                <input 
-                  type="number" 
-                  value={editItemCost} 
-                  placeholder="Item Cost" 
-                  onChange={(e) => setEditItemCost(e.target.value)}
-                />
-              </>
+          {/* </form> */}
+          {/* /* ERROR MESSAGE COMPONENT IN CASE OF DUPLICATION */}
+            {errorMsg && (
+              <div style={{background: "orange"}}>
+                <h2>
+                  A PERSON or item WITH THAT NAME IS ALREADY LOGGED
+                </h2>
+              </div>
             )}
-
-            {itemEditing !== el.name && <h5 onClick={() => removeItem(el.name)}>DELETE</h5>}
-            {itemEditing !== el.name && <h5 onClick={() => toggleItemEdit(el)}>EDIT</h5>}
-
-            {itemEditing === el.name && <h5 onClick={() => saveItemChanges(el.name)}>SAVE CHANGES</h5>}
-            {itemEditing === el.name && <h5 onClick={() => setItemEditing(false)}>GO BACK</h5>}
           </div>
         )}
 
-        <button type="submit" onClick={(e) => addPerson(e)} disabled={!validInputs}>
-          ADD PERSON
-        </button>
-      </form>
-
-      <h5 onClick={backToPeopleList}>
-        Back to people list
-      </h5>
-
-      {/* ERROR MESSAGE COMPONENT IN CASE OF DUPLICATION */}
-      {errorMsg && (
-        <div style={{background: "orange"}}>
-          <h2>
-            A PERSON or item WITH THAT NAME IS ALREADY LOGGED
-          </h2>
-        </div>
-      )}
-    </>
+      {/* FORM CONTENT ENDS */}
+      </div>
+    {/* PERSON FORM CONTAINER */}
+    </div>
   );
 };

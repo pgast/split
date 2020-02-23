@@ -1,39 +1,44 @@
 import React from "react";
 import Person from "./Person";
-
-const styles = {
-  flexDirection: "row",
-  background: "black",
-  color: "white",
-  textAlign: "center",
-}
+import "../Styles.css";
 
 export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
+  const validResultBtn = data.people.loggedPersons.length >= 1 ? true : false;
+
   return (
-    <>
-      <h2>
-        2. PEOPLE LIST
-      </h2>
-      <div style={styles}>
-        <h6 onClick={() => landing()}>
-          LANDING
-        </h6>
-        <h3 onClick={() => setView("resultsView")}>
-          GET RESULTS >>
-        </h3>
+    <div className="peopleListContainer">
+      {/* NAVBAR PEOPLE LIST */}
+      <div className="navbar">
+        <div className="back-btn" onClick={() => landing()}>
+          {'<'}
+        </div>
+        <div 
+          className={validResultBtn ? "get-result-btn" : "get-result-btn-disabled"}
+          onClick={() => validResultBtn ? setView("resultsView") : null}
+        >
+          GET RESULT
+        </div>
       </div>
-
-      {data.people.loggedPersons.map(el => 
-        <Person 
-          data={el}
-          key={el.name}
-          editPerson={editPerson}
-          deletePerson={deletePerson}
-          setView={() => setView("personEdit")}
-        /> 
-      )}
-
-      <button onClick={() => setView("personForm")}>Add Person</button>
-    </>
+      {/* CONTAINER FOR PEOPLE */}
+      <div className="content">
+        {data.people.loggedPersons.length >= 1 && (
+          <div className="people_container">
+            {data.people.loggedPersons.map(el => 
+              <Person 
+                data={el}
+                key={el.name}
+                editPerson={editPerson}
+                deletePerson={deletePerson}
+                setView={() => setView("personEdit")}
+              /> 
+            )}
+          </div>
+        )}
+        
+        <div className="add-person-btn" onClick={() => setView("personForm")}>
+          <h3>Add Person</h3>
+        </div>
+      </div>
+    </div>
   );
 };
