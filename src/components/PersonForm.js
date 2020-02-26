@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ListItem from "./ListItem";
 
 export default function PersonForm({ setView, state, addPersonDispatch, personEdit, personToEdit }) {
   const [personName, setPersonName] = useState(personEdit ? personToEdit.name : "");
@@ -9,8 +10,13 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
   const [editItemCost, setEditItemCost] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const [itemEditing, setItemEditing] = useState(false);
-  // const [addNameForm, setAddNameForm] = useState(personEdit ? false : true);
-  const [addNameForm, setAddNameForm] = useState(true);
+  const [addNameForm, setAddNameForm] = useState(personEdit ? false : true);
+
+  let textInput = null;
+  useEffect(() => {
+    textInput.focus();
+  }, []);
+
 
   let validPersonName = personName === "" ? false : true;
   let validItems = items.length !== 0 ? true : false;
@@ -104,21 +110,28 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
         </div>
       </div>
 
-
       {/* FORM CONTENT */}
       <div className="form_content">
         <div className={addNameForm ? "form_add_name_full" : "form_add_name_small"}>
-          <div className="name_input">
+          <div className="name_input_container">
+            <div className="name_message">
+              {addNameForm ? "Who bought this items?" : "Adding items bought by"}
+            </div>
             <input 
               type="text" 
               value={personName} 
               placeholder="Add person name" 
+              className={addNameForm ? "person_input" : "person_input person_input_small"}
+              ref={(text) => { textInput = text; }}
               onChange={(e) => setPersonName(e.target.value)}
             />
           </div>
           {addNameForm && (
-            <div className="add-person-btn" onClick={() => setAddNameForm(false)}>
-              <h3>Add Items</h3>
+            <div 
+              className={validPersonName ? "add-person-btn" : "add-person-btn-disabled"} 
+              onClick={() => validPersonName ? setAddNameForm(false) : null}
+            >
+              <h3>Add Items Bought</h3>
             </div>
           )}
         </div>
@@ -127,52 +140,43 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
         {!addNameForm && (
           <div className="item_container">
             <div className="add_item_form">
-              <input 
-                type="text" 
-                value={itemName} 
-                placeholder="Item Name" 
-                onChange={(e) => setItemName(e.target.value)}
-              />
-              <input 
-                type="number" 
-                value={itemCost} 
-                placeholder="Item Cost" 
-                onChange={(e) => setItemCost(e.target.value)}
-              />
-              <button onClick={(e) => addItem(e)} style={{ background: "black", color: "white" }} disabled={!validItem}>ADD ITEM</button>
+              <div className="item_form_inputs">
+                <input 
+                  type="text" 
+                  value={itemName} 
+                  placeholder="Item" 
+                  onChange={(e) => setItemName(e.target.value)}
+                />
+                <input 
+                  type="number" 
+                  value={itemCost} 
+                  placeholder="Cost" 
+                  onChange={(e) => setItemCost(e.target.value)}
+                />
+              </div>
+              <div 
+                onClick={(e) => validItem ? addItem(e) : null} 
+                className={validItem ? "add-item-btn" : "add-item-btn-disabled"}
+              >
+                Add Item
+              </div>
             </div>
 
             {/* add conditional rendering for list container */}
             {items.map(el => 
-              <div key={el.name} style={{background: "gray", margin: "42px"}}>
-
-                {itemEditing !== el.name && (
-                  <span>{el.name} - ${el.cost}</span>
-                )}
-
-                {itemEditing === el.name && (
-                  <>
-                    <input 
-                      type="text" 
-                      value={editItemName} 
-                      placeholder="Item Name" 
-                      onChange={(e) => setEditItemName(e.target.value)}
-                    />
-                    <input 
-                      type="number" 
-                      value={editItemCost} 
-                      placeholder="Item Cost" 
-                      onChange={(e) => setEditItemCost(e.target.value)}
-                    />
-                  </>
-                )}
-
-                {itemEditing !== el.name && <h5 onClick={() => removeItem(el.name)}>DELETE</h5>}
-                {itemEditing !== el.name && <h5 onClick={() => toggleItemEdit(el)}>EDIT</h5>}
-
-                {itemEditing === el.name && <h5 onClick={() => saveItemChanges(el.name)}>SAVE CHANGES</h5>}
-                {itemEditing === el.name && <h5 onClick={() => setItemEditing(false)}>GO BACK</h5>}
-              </div>
+              <ListItem 
+                el={el}
+                key={el.name}
+                itemEditing={itemEditing}
+                editItemName={editItemName}
+                editItemCost={editItemCost}
+                setEditItemCost={setEditItemCost}
+                setEditItemName={setEditItemName}
+                removeItem={() => removeItem(el.name)}
+                toggleItemEdit={() => toggleItemEdit(el)}
+                setItemEditing={() => setItemEditing(false)}
+                saveItemChanges={() => saveItemChanges(el.name)}
+              />
             )}
             {/* conditional rendering end */}
 
