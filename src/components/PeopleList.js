@@ -3,25 +3,29 @@ import Person from "./Person";
 import "../Styles.css";
 
 export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
-  const validResultBtn = data.people.loggedPersons.length >= 1 ? true : false;
+  const validLoggedPersons = data.people.loggedPersons.length >= 1 ? true : false;
 
   return (
     <div className="peopleListContainer">
-      {/* NAVBAR PEOPLE LIST */}
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
       <div className="navbar">
         <div className="back-btn" onClick={() => landing()}>
           {'<'}
         </div>
         <div 
-          className={validResultBtn ? "get-result-btn" : "get-result-btn-disabled"}
-          onClick={() => validResultBtn ? setView("resultsView") : null}
+          className={validLoggedPersons ? "get-result-btn" : "get-result-btn-disabled"}
+          onClick={() => validLoggedPersons ? setView("resultsView") : null}
         >
           GET RESULT
         </div>
       </div>
+{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+
       {/* CONTAINER FOR PEOPLE */}
       <div className="content">
-        {data.people.loggedPersons.length >= 1 && (
+        {validLoggedPersons && (
           <div className="people_container">
             {data.people.loggedPersons.map(el => 
               <Person 

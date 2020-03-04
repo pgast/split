@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ListItem from "./ListItem";
+import FeedbackBanner from "./FeedbackBanner";
 
 export default function PersonForm({ setView, state, addPersonDispatch, personEdit, personToEdit }) {
   const [personName, setPersonName] = useState(personEdit ? personToEdit.name : "");
@@ -97,7 +98,8 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
 
   return (
     <div className="personForm_container">
-      {/* NAVBAR */}
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
       <div className="navbar">
         <div className="back-btn" onClick={backToPeopleList}>
           {'<'}
@@ -109,12 +111,17 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
           {personEdit ? "SAVE CHANGES" : "ADD PERSON"}
         </div>
       </div>
+{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
 
       {/* FORM CONTENT */}
       <div className="form_content">
+
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+{/*  ///////////////////////////////   NAME FORM COMPONENT /////////////////////////////    */}
         <div className={addNameForm ? "form_add_name_full" : "form_add_name_small"}>
           <div className="name_input_container">
-            <div className="name_message">
+            <div className={addNameForm ? "name_message" : "name_message name_message_small"}>
               {addNameForm ? "Who bought this items?" : "Adding items bought by"}
             </div>
             <input 
@@ -135,10 +142,19 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
             </div>
           )}
         </div>
+{/*  ///////////////////////////////   NAME FORM COMPONENT /////////////////////////////    */}
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+
+
 
         {/* ADD ITEM FORM, ITEM LIST AND ERROR MESSAGE*/}
         {!addNameForm && (
           <div className="item_container">
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+{/*  ///////////////////////////////   ADD ITEM FORM COMPONENT /////////////////////////    */}
+
+            {(errorMsg && items.length !== 0) && <FeedbackBanner type="duplicate_item" toggleErrorMsg={() => setErrorMsg(false)} />}
+
             <div className="add_item_form">
               <div className="item_form_inputs">
                 <input 
@@ -162,7 +178,14 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
               </div>
             </div>
 
-            {/* add conditional rendering for list container */}
+            {/* BANNER THAT SHOWS DUPLICATE ITEM MESSAGE APPEARS HERE */}
+{/*  ///////////////////////////////   ADD ITEM FORM COMPONENT /////////////////////////    */}
+{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
+
+
+            {/* LIST CONTAINER, RENDERS LIST ITEM OR MESSAGE TO ADD ITEMS */}
+            {items.length === 0 && <FeedbackBanner type="no_people" />}
+
             {items.map(el => 
               <ListItem 
                 el={el}
@@ -170,6 +193,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
                 itemEditing={itemEditing}
                 editItemName={editItemName}
                 editItemCost={editItemCost}
+                validEditItem={validEditItem}
                 setEditItemCost={setEditItemCost}
                 setEditItemName={setEditItemName}
                 removeItem={() => removeItem(el.name)}
@@ -182,13 +206,6 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
 
           {/* </form> */}
           {/* /* ERROR MESSAGE COMPONENT IN CASE OF DUPLICATION */}
-            {errorMsg && (
-              <div style={{background: "orange"}}>
-                <h2>
-                  A PERSON or item WITH THAT NAME IS ALREADY LOGGED
-                </h2>
-              </div>
-            )}
           </div>
         )}
 

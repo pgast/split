@@ -6,6 +6,7 @@ export default function ListItem({
   itemEditing, 
   editItemName, 
   editItemCost,
+  validEditItem,
   setItemEditing, 
   toggleItemEdit, 
   setEditItemName, 
@@ -13,16 +14,21 @@ export default function ListItem({
   saveItemChanges, 
 }) {
   return (
-    <div className="list_item">
+    <div className={itemEditing !== el.name ? "list_item" : "list_item list_item_editing"}>
       {/* WHEN ITEM EDITING IS FALSE */}
       {itemEditing !== el.name && (
         <>
           <div className="list_item_text_container">
-            {el.name} - ${el.cost}
+            <span>
+              {el.name} 
+            </span>
+            <span className="list_item_text_bold">
+              ${el.cost}
+            </span>
           </div>
           <div className="list_item_btn_container">
-            <div className="get-result-btn list_item_btn" onClick={toggleItemEdit}>Edit</div>
-            <div className="get-result-btn list_item_btn" onClick={removeItem}>Delete</div>
+            <div className="list_item_btn" onClick={toggleItemEdit}>Edit</div>
+            <div className="list_item_btn" onClick={removeItem}>Delete</div>
           </div>
         </>
       )}
@@ -30,22 +36,36 @@ export default function ListItem({
       {/* WHEN ITEM EDITING IS TRUE DISPLAY THIS */}
       {itemEditing === el.name && (
         <>
-          <input 
-            type="text" 
-            value={editItemName} 
-            placeholder="Item Name" 
-            onChange={(e) => setEditItemName(e.target.value)}
-          />
-          <input 
-            type="number" 
-            value={editItemCost} 
-            placeholder="Item Cost" 
-            onChange={(e) => setEditItemCost(e.target.value)}
-          />
+          <div className="list_item_input_container">
+            <input 
+              type="text" 
+              value={editItemName} 
+              placeholder="Item Name" 
+              onChange={(e) => setEditItemName(e.target.value)}
+            />
+            <input 
+              type="number" 
+              value={editItemCost} 
+              placeholder="Cost" 
+              onChange={(e) => setEditItemCost(e.target.value)}
+            />
+          </div>
+          <div className="list_item_btn_container">
+            <div 
+              className={validEditItem ? "edit_list_item_btn" : "edit_list_item_btn edit_list_item_btn_disabled" }
+              onClick={validEditItem ? saveItemChanges : null}
+            >
+              Save
+            </div>
+            <div 
+              className="edit_list_item_btn" 
+              onClick={setItemEditing}
+              >
+                Cancel
+              </div>
+          </div>
         </>
       )}
-      {itemEditing === el.name && <h5 onClick={saveItemChanges}>SAVE CHANGES</h5>}
-      {itemEditing === el.name && <h5 onClick={setItemEditing}>GO BACK</h5>}
     </div>
   );
 };
