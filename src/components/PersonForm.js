@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ListItem from "./ListItem";
 import FeedbackBanner from "./FeedbackBanner";
+import AddItemForm from "./AddItemForm";
+import NameForm from "./NameForm";
+import Navbar from "./Navbar";
 
 export default function PersonForm({ setView, state, addPersonDispatch, personEdit, personToEdit }) {
   const [personName, setPersonName] = useState(personEdit ? personToEdit.name : "");
@@ -12,12 +15,6 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
   const [errorMsg, setErrorMsg] = useState(false);
   const [itemEditing, setItemEditing] = useState(false);
   const [addNameForm, setAddNameForm] = useState(personEdit ? false : true);
-
-  let textInput = null;
-  useEffect(() => {
-    textInput.focus();
-  }, []);
-
 
   let validPersonName = personName === "" ? false : true;
   let validItems = items.length !== 0 ? true : false;
@@ -98,94 +95,37 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
 
   return (
     <div className="personForm_container">
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
-      <div className="navbar">
-        <div className="back-btn" onClick={backToPeopleList}>
-          {'<'}
-        </div>
-        <div 
-          onClick={(e) => validInputs ? addPerson(e) : null}
-          className={validInputs ? "get-result-btn" : "get-result-btn-disabled"} 
-        >
-          {personEdit ? "SAVE CHANGES" : "ADD PERSON"}
-        </div>
-      </div>
-{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-
-      {/* FORM CONTENT */}
+      <Navbar 
+        type="personForm"
+        addPerson={addPerson}
+        personEdit={personEdit}
+        validInputs={validInputs}
+        backToPeopleList={backToPeopleList}
+      />
       <div className="form_content">
-
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-{/*  ///////////////////////////////   NAME FORM COMPONENT /////////////////////////////    */}
-        <div className={addNameForm ? "form_add_name_full" : "form_add_name_small"}>
-          <div className="name_input_container">
-            <div className={addNameForm ? "name_message" : "name_message name_message_small"}>
-              {addNameForm ? "Who bought this items?" : "Adding items bought by"}
-            </div>
-            <input 
-              type="text" 
-              value={personName} 
-              placeholder="Add person name" 
-              className={addNameForm ? "person_input" : "person_input person_input_small"}
-              ref={(text) => { textInput = text; }}
-              onChange={(e) => setPersonName(e.target.value)}
-            />
-          </div>
-          {addNameForm && (
-            <div 
-              className={validPersonName ? "add-person-btn" : "add-person-btn-disabled"} 
-              onClick={() => validPersonName ? setAddNameForm(false) : null}
-            >
-              <h3>Add Items Bought</h3>
-            </div>
-          )}
-        </div>
-{/*  ///////////////////////////////   NAME FORM COMPONENT /////////////////////////////    */}
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-
-
-
-        {/* ADD ITEM FORM, ITEM LIST AND ERROR MESSAGE*/}
+        <NameForm 
+          personName={personName}
+          addNameForm={addNameForm}
+          setPersonName={setPersonName}
+          setAddNameForm={setAddNameForm}
+          validPersonName={validPersonName}
+        />
         {!addNameForm && (
           <div className="item_container">
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-{/*  ///////////////////////////////   ADD ITEM FORM COMPONENT /////////////////////////    */}
-
-            {(errorMsg && items.length !== 0) && <FeedbackBanner type="duplicate_item" toggleErrorMsg={() => setErrorMsg(false)} />}
-
-            <div className="add_item_form">
-              <div className="item_form_inputs">
-                <input 
-                  type="text" 
-                  value={itemName} 
-                  placeholder="Item" 
-                  onChange={(e) => setItemName(e.target.value)}
-                />
-                <input 
-                  type="number" 
-                  value={itemCost} 
-                  placeholder="Cost" 
-                  onChange={(e) => setItemCost(e.target.value)}
-                />
-              </div>
-              <div 
-                onClick={(e) => validItem ? addItem(e) : null} 
-                className={validItem ? "add-item-btn" : "add-item-btn-disabled"}
-              >
-                Add Item
-              </div>
-            </div>
-
-            {/* BANNER THAT SHOWS DUPLICATE ITEM MESSAGE APPEARS HERE */}
-{/*  ///////////////////////////////   ADD ITEM FORM COMPONENT /////////////////////////    */}
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-
-
-            {/* LIST CONTAINER, RENDERS LIST ITEM OR MESSAGE TO ADD ITEMS */}
+            {(errorMsg && items.length !== 0) && (
+              <FeedbackBanner type="duplicate_item" toggleErrorMsg={() => setErrorMsg(false)} />
+            )}
+            {!errorMsg && (
+              <AddItemForm 
+                addItem={addItem}
+                itemName={itemName}
+                itemCost={itemCost}
+                validItem={validItem}
+                setItemCost={setItemCost}
+                setItemName={setItemName}
+              />
+            )}
             {items.length === 0 && <FeedbackBanner type="no_people" />}
-
             {items.map(el => 
               <ListItem 
                 el={el}
@@ -202,16 +142,9 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
                 saveItemChanges={() => saveItemChanges(el.name)}
               />
             )}
-            {/* conditional rendering end */}
-
-          {/* </form> */}
-          {/* /* ERROR MESSAGE COMPONENT IN CASE OF DUPLICATION */}
           </div>
         )}
-
-      {/* FORM CONTENT ENDS */}
       </div>
-    {/* PERSON FORM CONTAINER */}
     </div>
   );
 };

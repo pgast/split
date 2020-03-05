@@ -1,5 +1,6 @@
 import React from "react";
 import Person from "./Person";
+import Navbar from "./Navbar";
 import "../Styles.css";
 
 export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
@@ -7,23 +8,12 @@ export default function PeopleList({ setView, landing, data, deletePerson, editP
 
   return (
     <div className="peopleListContainer">
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
-      <div className="navbar">
-        <div className="back-btn" onClick={() => landing()}>
-          {'<'}
-        </div>
-        <div 
-          className={validLoggedPersons ? "get-result-btn" : "get-result-btn-disabled"}
-          onClick={() => validLoggedPersons ? setView("resultsView") : null}
-        >
-          GET RESULT
-        </div>
-      </div>
-{/*  ///////////////////////////////   NAVBAR COMPONENT   //////////////////////////////    */}
-{/*  ///////////////////////////////////////////////////////////////////////////////////    */}
-
-      {/* CONTAINER FOR PEOPLE */}
+      <Navbar 
+        landing={() => landing()}
+        validLoggedPersons={validLoggedPersons}
+        setView={() => setView("resultsView")}
+        type="peopleList"
+      />
       <div className="content">
         {validLoggedPersons && (
           <div className="people_container">
@@ -38,7 +28,6 @@ export default function PeopleList({ setView, landing, data, deletePerson, editP
             )}
           </div>
         )}
-        
         <div className="add-person-btn" onClick={() => setView("personForm")}>
           <h3>Add Person</h3>
         </div>

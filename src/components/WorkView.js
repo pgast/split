@@ -4,7 +4,13 @@ import PeopleList from "./PeopleList";
 import PersonForm from "./PersonForm";
 import "../Styles.css";
 
-export default function WorkView({ toggleMode, data, addPersonDispatch, deletePersonDispatch, editPersonDispatch }) {
+export default function WorkView({ 
+  data, 
+  toggleMode, 
+  addPersonDispatch, 
+  editPersonDispatch, 
+  deletePersonDispatch, 
+}) {
   const [view, setView] = useState("peopleList");
 
   return (
