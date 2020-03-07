@@ -6,12 +6,17 @@ import "../Styles.css";
 
 export default function WorkView({ 
   data, 
-  toggleMode, 
+  resetData,
+  toggleMode,
   addPersonDispatch, 
   editPersonDispatch, 
   deletePersonDispatch, 
 }) {
   const [view, setView] = useState("peopleList");
+  const reset = () => {
+    resetData();
+    toggleMode("landing");
+  };
 
   return (
     <div className="workView">
@@ -26,7 +31,11 @@ export default function WorkView({
       )}  
 
       {view === "resultsView" && (
-        <ResultsView setView={setView} landing={() => toggleMode("landing")} data={data}/>
+        <ResultsView 
+          data={data}
+          reset={reset}
+          setView={setView} 
+        />
       )}
 
       {view === "personEdit" && (

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-export default function ResultsView({ setView, landing, data }) {
+import Navbar from "./Navbar";
+
+export default function ResultsView({ setView, landing, data, reset }) {
   const [totalCost, setTotalCost] = useState(0);
   const [viewMode, setViewMode] = useState("persons");
   const [personDetail, setPersonDetail] = useState(undefined);
@@ -52,12 +54,6 @@ export default function ResultsView({ setView, landing, data }) {
     setTotalCost(getTotalCost());
   }, []);
   
-  const styles = {
-    flexDirection: "row",
-    background: "black",
-    color: "white",
-    textAlign: "center",
-  }
 
   const btnStyle = {
     background: "black",
@@ -65,18 +61,12 @@ export default function ResultsView({ setView, landing, data }) {
   };
 
   return (
-    <>
-      <h2>
-        3. RESULTS VIEW
-      </h2>
-      <div style={styles}>
-        <h6 onClick={() => landing()}>
-          LANDING
-        </h6>
-        <h3 onClick={() => setView("peopleList")}>
-          EDIT PEOPLE
-        </h3>
-      </div>
+    <div className="resultsViewContainer">
+       <Navbar 
+        reset={reset}
+        type="resultsView"
+        backToPeopleList={() => setView("peopleList")}
+      />
 
       <div>
         <h1>Total cost: {totalCost}</h1>
@@ -106,6 +96,6 @@ export default function ResultsView({ setView, landing, data }) {
           {item.name} - ${item.cost} - {item.personName}
         </div>
       )}
-    </>
+    </div>
   );
 };

@@ -7,15 +7,19 @@ export default function Person({ data, editPerson, deletePerson, setView }) {
   }
 
   return (
-    <div style={{ background: 'cyan' }}>
-      <h4>{data.name}</h4>
-      <h5>{data.items.length} items.</h5>
-      <button onClick={() => deletePerson(data.name)}>
-        DELETE
-      </button>
-      <button onClick={() => editCurrentPerson(data.name)}>
-        EDIT
-      </button>
+    <div className="list_item">
+      <div className="list_item_text_container">
+        <span className={"list_item_text_bold"}>
+          {data.name} 
+        </span>
+        <span>
+          {data.items.length} items
+        </span>
+      </div>
+      <div className="list_item_btn_container">
+        <div className="list_item_btn" onClick={() => editCurrentPerson(data.name)}>Edit</div>
+        <div className="list_item_btn" onClick={() => deletePerson(data.name)}>Delete</div>
+      </div>
     </div>
   );
 };

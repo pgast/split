@@ -1,7 +1,7 @@
 import React from "react";
 import Person from "./Person";
 import Navbar from "./Navbar";
-import "../Styles.css";
+// import "../Styles.css";
 
 export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
   const validLoggedPersons = data.people.loggedPersons.length >= 1 ? true : false;

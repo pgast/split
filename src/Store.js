@@ -3,7 +3,7 @@ import React, { useReducer, createContext } from "react";
 const initialState = {
   mode: "landing",
   people: {
-    loggedPersons: [{name: 'joe', items: [{name: 'shit', cost: 23}]}],
+    loggedPersons: [{name: 'joe', items: [{name: 'shit', cost: 23}]}, {name: 'phil', items: [{name: 'shisst', cost: 223}]}],
     // loggedPersons: [],
     personToEdit: undefined,
   }
@@ -24,6 +24,9 @@ function reducer (state, action) {
       return { ...state, people: { ...state.people, loggedPersons: newLoggedPersons, personToEdit: personToEdit[0] } };   
     case 'DELETE_PERSON':
       newLoggedPersons = [...state.people.loggedPersons].filter(el => el.name !== action.payload);
+      return { ...state, people: { ...state.people, loggedPersons: newLoggedPersons } };
+    case 'RESET_DATA':
+      newLoggedPersons = [];
       return { ...state, people: { ...state.people, loggedPersons: newLoggedPersons } };
     default:
       return state;

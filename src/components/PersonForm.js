@@ -115,6 +115,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
             {(errorMsg && items.length !== 0) && (
               <FeedbackBanner type="duplicate_item" toggleErrorMsg={() => setErrorMsg(false)} />
             )}
+            {/* if errorMsg is false BUSCAR CONDICIONAL*/}
             {!errorMsg && (
               <AddItemForm 
                 addItem={addItem}

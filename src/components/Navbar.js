@@ -2,6 +2,7 @@ import React from "react";
 
 export default function Navbar({ 
   type ,
+  reset,
   landing, 
   setView, 
   addPerson, 
@@ -38,6 +39,17 @@ export default function Navbar({
             GET RESULT
           </div>
         </div>
+      )}
+
+      {type === "resultsView" && (
+        <div className="navbar">
+          <div className="back-btn" onClick={backToPeopleList}>
+            {'<'}
+          </div>
+          <div className="get-result-btn" onClick={reset}>
+            Start Again
+          </div>
+      </div> 
       )}
     </>
   );
