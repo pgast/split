@@ -94,7 +94,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
   };
 
   return (
-    <div className="personForm_container">
+    <div className="view-container">
       <Navbar 
         type="personForm"
         addPerson={addPerson}

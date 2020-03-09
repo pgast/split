@@ -10,15 +10,19 @@ export default function Person({ data, editPerson, deletePerson, setView }) {
     <div className="list_item">
       <div className="list_item_text_container">
         <span className={"list_item_text_bold"}>
-          {data.name} 
+          {data.name.charAt(0).toUpperCase() + data.name.substring(1)} 
         </span>
         <span>
-          {data.items.length} items
+          {data.items.length} {data.items.length > 1 ? "items" : "item"}
         </span>
       </div>
       <div className="list_item_btn_container">
-        <div className="list_item_btn" onClick={() => editCurrentPerson(data.name)}>Edit</div>
-        <div className="list_item_btn" onClick={() => deletePerson(data.name)}>Delete</div>
+        <div className="person-btn" onClick={() => editCurrentPerson(data.name)}>
+          Edit
+        </div>
+        <div className="person-btn" onClick={() => deletePerson(data.name)}>
+          <i class="fa fa-times"></i>
+        </div>
       </div>
     </div>
   );

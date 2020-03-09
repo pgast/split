@@ -28,7 +28,9 @@ export default function ListItem({
           </div>
           <div className="list_item_btn_container">
             <div className="list_item_btn" onClick={toggleItemEdit}>Edit</div>
-            <div className="list_item_btn" onClick={removeItem}>Delete</div>
+            <div className="list_item_btn" onClick={removeItem}>
+              <i class="fa fa-times"></i>
+            </div>
           </div>
         </>
       )}

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 import Navbar from "./Navbar";
+import ResultsHeader from "./ResultsHeader";
+import ResultsItemsList from "./ResultsItemsList";
+import ResultsPersonsList from "./ResultsPersonsList";
 
-export default function ResultsView({ setView, landing, data, reset }) {
+export default function ResultsView({ setView, data, reset }) {
   const [totalCost, setTotalCost] = useState(0);
   const [viewMode, setViewMode] = useState("persons");
   const [personDetail, setPersonDetail] = useState(undefined);
-  let costPerPerson  = +(totalCost / data.people.loggedPersons.length).toFixed(2);
+  let costPerPerson = +(totalCost / data.people.loggedPersons.length).toFixed(2);
 
   const personDetailsToggle = (person) => {
     if(person === personDetail) {
@@ -54,48 +57,32 @@ export default function ResultsView({ setView, landing, data, reset }) {
     setTotalCost(getTotalCost());
   }, []);
   
-
-  const btnStyle = {
-    background: "black",
-    color: "white"
-  };
-
   return (
-    <div className="resultsViewContainer">
+    <div className="view-container">
        <Navbar 
         reset={reset}
         type="resultsView"
         backToPeopleList={() => setView("peopleList")}
       />
-
-      <div>
-        <h1>Total cost: {totalCost}</h1>
-        <h2>Cost per person: {costPerPerson}</h2>
-        <span>
-          <h3 style={viewMode === "persons" ? btnStyle : null} onClick={viewMode === "persons" ? null : () => setViewMode("persons")}>PERSONS LIST</h3>
-          <h3 style={viewMode === "items" ? btnStyle : null} onClick={viewMode === "items" ? null : () => setViewMode("items")}>ITEMS LIST</h3>
-        </span>
-      </div>
-
+      <ResultsHeader 
+        viewMode={viewMode}
+        totalCost={totalCost}
+        setViewMode={setViewMode}
+        costPerPerson={costPerPerson}
+      />
       {viewMode === "persons" && data.people.loggedPersons.map(person => 
-        <div key={person.name} onClick={() => personDetailsToggle(person.name)}>
-          {person.name} {getExpensePerPerson(person.items) > costPerPerson ? "IS OWED" : "OWES"} {getDifference(person.items)}
-          {personDetail === person.name && (
-            <>
-              <h3>{getExpensePerPerson(person.items)} - paid</h3>
-              <ol>
-                {person.items.map(item => <li key={item.name}>{item.name} - {item.cost}</li>)}
-              </ol>
-            </>
-          )}
-        </div>
+        <ResultsPersonsList
+          person={person}
+          key={person.name}
+          personDetail={personDetail}
+          costPerPerson={costPerPerson}
+          difference={getDifference(person.items)}
+          expensePerPerson={getExpensePerPerson(person.items)}
+          personDetailsToggle={() => personDetailsToggle(person.name)}
+        />
       )}
 
-      {viewMode === "items" && getItemsList(data.people.loggedPersons).map(item => 
-        <div key={item.name}>
-          {item.name} - ${item.cost} - {item.personName}
-        </div>
-      )}
+      {viewMode === "items" && <ResultsItemsList getItemsList={getItemsList} items={data.people.loggedPersons}/>}
     </div>
   );
 };

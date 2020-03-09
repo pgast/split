@@ -1,22 +1,20 @@
 import React from "react";
 import Person from "./Person";
 import Navbar from "./Navbar";
-// import "../Styles.css";
 
 export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
   const validLoggedPersons = data.people.loggedPersons.length >= 1 ? true : false;
-
   return (
-    <div className="peopleListContainer">
+    <div className="view-container">
       <Navbar 
-        landing={() => landing()}
-        validLoggedPersons={validLoggedPersons}
-        setView={() => setView("resultsView")}
         type="peopleList"
+        landing={() => landing()}
+        setView={() => setView("resultsView")}
+        validLoggedPersons={validLoggedPersons}
       />
       <div className="content">
         {validLoggedPersons && (
-          <div className="people_container">
+          <div className="people-container">
             {data.people.loggedPersons.map(el => 
               <Person 
                 data={el}
@@ -28,7 +26,10 @@ export default function PeopleList({ setView, landing, data, deletePerson, editP
             )}
           </div>
         )}
-        <div className="add-person-btn" onClick={() => setView("personForm")}>
+        <div 
+          onClick={() => setView("personForm")}
+          className={validLoggedPersons ? "add-person-btn add-person-btn-bottom" : "add-person-btn"} 
+        >
           <h3>Add Person</h3>
         </div>
       </div>

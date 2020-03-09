@@ -9,7 +9,9 @@ body {
   font-family: sans-serif;
 }
 
+/* ////////////////////////////////////// */
 /* LANDING */
+/* ////////////////////////////////////// */
 .landing {
   height: 100vh;
   display: flex;
@@ -23,8 +25,10 @@ body {
   width: 100%  
 }
 
-/* PEOPLE LIST */
-.peopleListContainer {
+/* ////////////////////////////////////// */
+/* BLOCKS */
+/* ////////////////////////////////////// */
+.view-container {
   height: 100vh;
   margin: 0px;
   padding: 0px;
@@ -33,12 +37,9 @@ body {
   background: #ebebeb;
 }
 
-.people_container {
-  width: 300px;
-  align-self: center;
-  margin-bottom: 44px;
-}
-
+/* ////////////////////////////////////// */
+/* NAVBARS */
+/* ////////////////////////////////////// */
 .navbar {
   height: 15%;
   padding-right: 12px;
@@ -48,6 +49,13 @@ body {
   align-items: center;
 }
 
+.navbar--results {
+  background: salmon;
+}
+
+/* ////////////////////////////////////// */
+/* BUTTONS */
+/* ////////////////////////////////////// */
 .get-result-btn {
   display: flex;
   padding: 22px;
@@ -88,6 +96,47 @@ body {
               inset -9px -9px 18px #ffffff;
 }
 
+.results-btn {
+  display: flex;
+  padding: 22px;
+  font-size: medium;
+  font-weight: bold;
+  flex-direction: column;
+  justify-content: center;
+  margin: 8px;
+  height: 11px;
+  border-radius: 28px;
+  background: salmon;
+  color: white;
+  box-shadow:  9px 9px 14px #d96b67, 
+              -9px -9px 18px #ff918b;
+}
+
+.results-btn:hover {
+  color: rgb(241, 241, 241);
+  box-shadow:  inset 9px 9px 14px #d96b67, 
+                inset -9px -9px 18px #ff918b;
+}
+
+.results-btn--back {
+  width: 11px;
+  border-radius: 100%;
+}
+
+.results-btn--toggle-results {
+  padding: 11px;
+  font-size: small;
+  font-weight: 600;
+  align-self: center;
+}
+
+.results-btn--toggle-results--pressed {
+  color: rgb(216, 216, 216);
+  background: #d96b67;
+  box-shadow:  inset 9px 9px 14px #d96b67, 
+                inset -9px -9px 18px #ff918b;
+}
+
 .back-btn {
   display: flex;
   padding: 22px;
@@ -111,13 +160,6 @@ body {
   background: #ebebeb;
   box-shadow: inset 9px 9px 18px #cccccc, 
               inset -9px -9px 18px #ffffff;
-}
-
-.content {
-  height: 85%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .add-person-btn {
@@ -158,17 +200,167 @@ body {
               inset -9px -9px 18px #ffffff;
 }
 
-
-/* PERSON FORM */
-.personForm_container {
-  height: 100vh;
-  margin: 0px;
-  padding: 0px;
-  display: flex;
-  flex-direction: column;
-  background: #ebebeb;
+.add-person-btn-bottom {
+  bottom: 24px;
+  position: fixed;
 }
 
+.add-item-btn {
+  color: white;
+  border-radius: 28px;
+  background: rgb(172, 170, 170);
+  box-shadow:  5px 5px 10px #929191, 
+              -5px -5px 10px #c6c4c4;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+  width: 90px;
+  height: 30px;
+  margin-top: 2px;
+}
+
+.add-item-btn-disabled {
+  color: #919191;
+  border-radius: 28px;
+  background: rgb(172, 170, 170);
+  box-shadow: inset 5px 5px 10px #919191, 
+              inset -5px -5px 10px #c6c4c4;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+  width: 90px;
+  height: 30px;
+  margin-top: 2px;
+}
+
+.add-item-btn:hover {
+  border-radius: 28px;
+  color: #919191;
+  margin-top: 2px;
+  background: rgb(172, 170, 170);
+  box-shadow: inset 5px 5px 10px #919191, 
+              inset -5px -5px 10px #c6c4c4;
+}
+
+.list_item_btn {
+  color: rgb(172, 170, 170);
+  background: white;
+  font-weight: 500;
+  margin: 0px;
+  margin-left: 4px;
+  padding: 8px;
+  height: 11px;
+  font-size: medium;
+  display: flex;
+  font-weight: 500;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #cccccc;
+  border-radius: 28px;
+  font-size: smaller;
+}
+
+.list_item_btn:hover {
+  color: salmon;
+  background: white;
+  box-shadow: 1px 1px 2px #cccccc, 
+              -1px -1px 2px #ffffff;
+}
+
+.person-btn {
+  color: rgb(172, 170, 170);
+  background: #ebebeb;
+  font-weight: 500;
+  margin: 0px;
+  margin-left: 4px;
+  padding: 8px;
+  height: 11px;
+  font-size: medium;
+  display: flex;
+  font-weight: 500;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #cccccc;
+  border-radius: 28px;
+  font-size: smaller;
+}
+
+.person-btn:hover {
+  color: salmon;
+  background: white;
+  box-shadow: inset 1px 1px 2px #cccccc, 
+              inset -1px -1px 2px #ffffff;
+}
+
+.edit_list_item_btn {
+  border: 1px solid #d96b67;
+  background: salmon;
+  color: white;
+  font-weight: 500;
+  margin: 0px;
+  margin-left: 4px;
+  padding: 8px;
+  height: 11px;
+  font-size: medium;
+  display: flex;
+  font-weight: 500;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 28px;
+  font-size: smaller;
+}
+
+.edit_list_item_btn:hover {
+  color: rgb(241, 241, 241);
+  box-shadow: inset 1px 1px 6px #d96b67, 
+              inset -1px -1px 8px #ff918b;
+}
+
+.edit_list_item_btn_disabled {
+  color: salmon;
+  background: #d96b67;
+  box-shadow: inset 1px 1px 6px #b95a56, 
+              inset -1px -1px 8px #ff918b;
+}
+
+.banner_duplicate_item_btn {
+  background: salmon;
+  box-shadow:  5px 5px 10px #d96b67, 
+              -5px -5px 10px #ff918b;;
+}
+
+.banner_duplicate_item_btn:hover {
+  background: salmon;
+  color: rgb(241, 241, 241);
+  box-shadow: inset 5px 5px 10px #d96b67, 
+              inset -5px -5px 10px #ff918b;;
+}
+
+
+/* ////////////////////////////////////// */
+/* PEOPLE LIST */
+/* ////////////////////////////////////// */
+.people-container {
+  width: 300px;
+  align-self: center;
+  margin-bottom: 44px;
+}
+
+.content {
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+/* ////////////////////////////////////// */
+/* PERSON FORM */
+/* ////////////////////////////////////// */
 .form_content {
   height: 85%;
   width: 100%;
@@ -311,47 +503,6 @@ body {
   align-self: center;
 }
 
-.add-item-btn {
-  color: white;
-  border-radius: 28px;
-  background: rgb(172, 170, 170);
-  box-shadow:  5px 5px 10px #929191, 
-              -5px -5px 10px #c6c4c4;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  text-align: center;
-  justify-content: center;
-  width: 90px;
-  height: 30px;
-  margin-top: 2px;
-}
-
-.add-item-btn-disabled {
-  color: #919191;
-  border-radius: 28px;
-  background: rgb(172, 170, 170);
-  box-shadow: inset 5px 5px 10px #919191, 
-              inset -5px -5px 10px #c6c4c4;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  text-align: center;
-  justify-content: center;
-  width: 90px;
-  height: 30px;
-  margin-top: 2px;
-}
-
-.add-item-btn:hover {
-  border-radius: 28px;
-  color: #919191;
-  margin-top: 2px;
-  background: rgb(172, 170, 170);
-  box-shadow: inset 5px 5px 10px #919191, 
-              inset -5px -5px 10px #c6c4c4;
-}
-
 .list_item {
   width: 280px;
   height: 38px;
@@ -371,31 +522,6 @@ body {
   background: salmon;
 }
 
-.list_item_btn {
-  color: rgb(172, 170, 170);
-  background: white;
-  font-weight: 500;
-  margin: 0px;
-  margin-left: 4px;
-  padding: 8px;
-  height: 11px;
-  font-size: medium;
-  display: flex;
-  font-weight: 500;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid #cccccc;
-  border-radius: 28px;
-  font-size: smaller;
-}
-
-.list_item_btn:hover {
-  color: salmon;
-  background: white;
-  box-shadow: 1px 1px 2px #cccccc, 
-              -1px -1px 2px #ffffff;
-}
-
 .list_item_btn_container {
   display: flex;
   flex-direction: row;
@@ -403,38 +529,10 @@ body {
   justify-content: flex-end;
 }
 
+
+/* ////////////////////////////////////// */
 /* EDIT LIST ITEM */
-.edit_list_item_btn {
-  border: 1px solid #d96b67;
-  background: salmon;
-  color: white;
-  font-weight: 500;
-  margin: 0px;
-  margin-left: 4px;
-  padding: 8px;
-  height: 11px;
-  font-size: medium;
-  display: flex;
-  font-weight: 500;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 28px;
-  font-size: smaller;
-}
-
-.edit_list_item_btn:hover {
-  color: rgb(241, 241, 241);
-  box-shadow: inset 1px 1px 6px #d96b67, 
-              inset -1px -1px 8px #ff918b;
-}
-
-.edit_list_item_btn_disabled {
-  color: salmon;
-  background: #d96b67;
-  box-shadow: inset 1px 1px 6px #b95a56, 
-              inset -1px -1px 8px #ff918b;
-}
-
+/* ////////////////////////////////////// */
 .list_item_text_container {
   display: flex;
   color: rgb(129, 127, 127);
@@ -482,7 +580,10 @@ body {
   margin-right: 7px;
 }
 
+
+/* ////////////////////////////////////// */
 /* BANNERS & USER FEEDBACK MESSAGES */
+/* ////////////////////////////////////// */
 .banner_no_people {
   text-align: center;
   margin-top: 5em;
@@ -515,25 +616,95 @@ body {
   align-self: center;
 }
 
-.banner_duplicate_item_btn {
-  background: salmon;
-  box-shadow:  5px 5px 10px #d96b67, 
-              -5px -5px 10px #ff918b;;
-}
 
-.banner_duplicate_item_btn:hover {
-  background: salmon;
-  color: rgb(241, 241, 241);
-  box-shadow: inset 5px 5px 10px #d96b67, 
-              inset -5px -5px 10px #ff918b;;
-}
-
+/* ////////////////////////////////////// */
 /* RESULTS VIEW */
-.resultsViewContainer {
-  height: 100vh;
-  margin: 0px;
-  padding: 0px;
+/* ////////////////////////////////////// */
+
+/* RESULTS HEADER */
+.results-header {
+  background: salmon;
+  display: flex;
+  height: 25%;
+  flex-direction: column;
+}
+
+.results-header__results-text {
   display: flex;
   flex-direction: column;
-  background: #ebebeb;
+  align-content: space-around;
+  height: 60%;
+  text-align: center;
 }
+
+.results-header__results-text--main {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.results-header__results-text--main span{
+  font-weight: 800;
+  color: white;
+}
+
+.results-header__results-text--secondary {
+  font-weight: normal;
+  font-size: normal;
+}
+
+.results-header__toggle-lists-btns {
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.list_item--show {
+  background: salmon;
+  display: flex;
+  flex-direction: column;
+}
+
+.results__list-item__content-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 130px;
+}
+
+.results__list-item__item--cost {
+  width: 45%;
+  font-weight: 600;
+}
+
+.results__list-item__item--person-name {
+  font-weight: 600;
+  font-size: small;
+  width: 66px;
+  color: rgb(182, 182, 182);
+  text-align: right;
+}
+
+/* PERSON RESULTS */
+.results__person-card__info-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.results__person-card__info--name {
+  width: 40%;
+}
+
+.results__person-card__info--status {
+  font-weight: 600;
+  width: 55%;
+  color: rgb(253, 76, 76);
+}
+
+.results__person-card__info--status--is-owed {
+  font-weight: 600;
+  width: 55%;
+  color: rgb(84, 180, 84);
+}
+
