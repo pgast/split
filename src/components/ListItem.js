@@ -20,7 +20,7 @@ export default function ListItem({
         <>
           <div className="list_item_text_container">
             <span>
-              {el.name} 
+              {el.name.charAt(0).toUpperCase() + el.name.substring(1)} 
             </span>
             <span className="list_item_text_bold">
               ${el.cost}

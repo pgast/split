@@ -69,6 +69,7 @@ export default function ResultsView({ setView, data, reset }) {
         totalCost={totalCost}
         setViewMode={setViewMode}
         costPerPerson={costPerPerson}
+        setPersonDetail={setPersonDetail}
       />
       {viewMode === "persons" && data.people.loggedPersons.map(person => 
         <ResultsPersonsList

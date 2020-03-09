@@ -3,10 +3,24 @@ import React from "react";
 export default function FeedbackBanner({ type, toggleErrorMsg }) {
   return (
     <>
-      {type === "duplicate_item" && (
+      {type === "duplicateItem" && (
         <div className="banner_duplicate_item">
           <div className="banner_duplicate_item_text">
               An item with that name already exists, try a different name
+          </div>
+          <div 
+            onClick={toggleErrorMsg} 
+            className="add-item-btn banner_duplicate_item_btn"
+          >
+            Ok
+          </div>
+        </div>
+      )}
+
+      {type === "duplicatePerson" && (
+        <div className="banner_duplicate_item">
+          <div className="banner_duplicate_item_text">
+              A person with that name already exists, try a different name
           </div>
           <div 
             onClick={toggleErrorMsg} 

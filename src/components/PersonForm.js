@@ -29,7 +29,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
     e.preventDefault();
 
     if(personIsDuplicate) {
-      setErrorMsg(true);
+      setErrorMsg("duplicatePerson");
     } else {
       const newPerson = {
         name: personName,
@@ -44,7 +44,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
     e.preventDefault();
 
     if(itemIsDuplicate) {
-      setErrorMsg(true);
+      setErrorMsg("duplicateItem");
     } else {
       if(errorMsg) setErrorMsg(false);
       let newItem = {
@@ -75,7 +75,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
 
   const saveItemChanges = (item) => {
     if(itemIsDuplicate) {
-      setErrorMsg(true);
+      setErrorMsg("duplicateItem");
     } else {
       let newItems = [...items];
       newItems = newItems.filter(el => el.name !== item);
@@ -109,11 +109,15 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
           setPersonName={setPersonName}
           setAddNameForm={setAddNameForm}
           validPersonName={validPersonName}
+          personIsDuplicate={personIsDuplicate}
         />
         {!addNameForm && (
           <div className="item_container">
-            {(errorMsg && items.length !== 0) && (
-              <FeedbackBanner type="duplicate_item" toggleErrorMsg={() => setErrorMsg(false)} />
+            {(errorMsg === "duplicateItem" && items.length !== 0) && (
+              <FeedbackBanner type={errorMsg} toggleErrorMsg={() => setErrorMsg(false)} />
+            )}
+            {errorMsg === "duplicatePerson" && (
+              <FeedbackBanner type={errorMsg} toggleErrorMsg={() => setErrorMsg(false)} />
             )}
             {/* if errorMsg is false BUSCAR CONDICIONAL*/}
             {!errorMsg && (

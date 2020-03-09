@@ -13,16 +13,63 @@ body {
 /* LANDING */
 /* ////////////////////////////////////// */
 .landing {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background: salmon; 
 }
 
 .landing_banner {
   text-align: center;
-  width: 100%  
+  width: 100%;  
+  height: 76%;
+}
+
+.landing_banner__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 70%;
+}
+
+.landing_banner__main h1 {
+  font-size: 50px;
+  font-weight: lighter;
+  color: white;
+  margin: 0px;
+}
+
+.landing_banner__main h3 {
+  margin-top: 12px;
+}
+
+.landing__btn {
+  bottom: 50px;
+  position: fixed;
+  width: 160px;
+  text-align: center;
+  display: flex;
+  padding: 22px;
+  font-size: medium;
+  font-weight: bold;
+  flex-direction: column;
+  justify-content: center;
+  height: 11px;
+  border-radius: 28px;
+  background: salmon;
+  color: white;
+  box-shadow:  9px 9px 14px #d96b67, 
+              -9px -9px 18px #ff918b;
+}
+
+.landing__btn:hover {
+  color: rgb(241, 241, 241);
+  box-shadow:  inset 9px 9px 14px #d96b67, 
+                inset -9px -9px 18px #ff918b;
+}
+
+.landing__description {
+  color: white;
+  font-size: 16px;
+  height: 30%;
+  margin: 0px 12px 0px 12px;
 }
 
 /* ////////////////////////////////////// */
@@ -419,7 +466,12 @@ body {
 .person_input_small:focus,
 .person_input:focus {
   background: #d2d9dd;
-} 
+}
+
+.person_input--error:focus {
+  background: rgb(250, 147, 147);
+  color: white;
+}
 
 .name_message { 
   font-size: 25px;
@@ -626,29 +678,33 @@ body {
   background: salmon;
   display: flex;
   height: 25%;
+  padding-bottom: 20px;
+  margin-bottom: 22px;
   flex-direction: column;
 }
 
 .results-header__results-text {
   display: flex;
   flex-direction: column;
-  align-content: space-around;
+  padding-top: 22px;
   height: 60%;
+  font-weight: 500;
   text-align: center;
-}
-
-.results-header__results-text--main {
-  font-weight: bold;
-  font-size: x-large;
-}
-
-.results-header__results-text--main span{
-  font-weight: 800;
   color: white;
 }
 
+.results-header__results-text span {
+  color: black;
+  font-weight: 600;
+  padding-left: 13px;
+}
+
+.results-header__results-text--main {
+  font-size: x-large;
+  margin-bottom: 12px;
+}
+
 .results-header__results-text--secondary {
-  font-weight: normal;
   font-size: normal;
 }
 
@@ -657,12 +713,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
-}
-
-.list_item--show {
-  background: salmon;
-  display: flex;
-  flex-direction: column;
 }
 
 .results__list-item__content-container {
@@ -696,15 +746,61 @@ body {
   width: 40%;
 }
 
+.results__person-card__info--name--expanded {
+  font-weight: 600;
+}
+
 .results__person-card__info--status {
   font-weight: 600;
+  font-size: 14px;
   width: 55%;
   color: rgb(253, 76, 76);
 }
 
 .results__person-card__info--status--is-owed {
   font-weight: 600;
+  font-size: 14px;
   width: 55%;
   color: rgb(84, 180, 84);
 }
 
+/* PERSON RESULTS EXPANDED */
+.list_item--show {
+  background: salmon;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding-bottom: 16px;
+}
+
+.list_item-person--results:hover {
+  background: #f1f1f1;
+  box-shadow:  1px 1px 9px #cccccc, 
+              -1px -1px 3px #ffffff;
+}
+
+.results__person-card--expanded__info-content {
+  width: 100%;
+}
+
+.results__person-card--expanded__info-paid {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0px 0px 12px 112px;
+}
+
+.results__person-card--expanded__info-items {
+  margin: 0px 33px 0px 112px;
+  font-size: small;
+}
+
+.results__person-card__info-row--expanded {
+  margin: 10px 0px 0px 0px;
+}
+
+.results__person-card__info--status--expanded {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  width: 55%;
+}
