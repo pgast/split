@@ -11,26 +11,20 @@ export default function ResultsView({ setView, data, reset }) {
   const [personDetail, setPersonDetail] = useState(undefined);
   let costPerPerson = +(totalCost / data.people.loggedPersons.length).toFixed(2);
 
-  const personDetailsToggle = (person) => {
-    if(person === personDetail) {
-      setPersonDetail(false);
-    } else {
-      setPersonDetail(person);
-    };
+  const personDetailsToggle = (person) => {  
+    setPersonDetail(person === personDetail ? false : person);
   };
 
   const getItemsList = (loggedPersons) => {
     let items = [];
-
     loggedPersons.forEach(person => {
       person.items.forEach(item => {
         let listItem = {...item, personName: person.name};
         items.push(listItem);
       });
     });
-
     return items;
-  }
+  };
 
   const getExpensePerPerson = (items) => {
     let expensePerPerson = 0;
@@ -51,7 +45,7 @@ export default function ResultsView({ setView, data, reset }) {
   const getDifference = (items) => {
     let expensePerPerson = getExpensePerPerson(items);
     return Math.abs(expensePerPerson - costPerPerson);
-  }
+  };
 
   useEffect(() => {
     setTotalCost(getTotalCost());
@@ -82,8 +76,12 @@ export default function ResultsView({ setView, data, reset }) {
           personDetailsToggle={() => personDetailsToggle(person.name)}
         />
       )}
-
       {viewMode === "items" && <ResultsItemsList getItemsList={getItemsList} items={data.people.loggedPersons}/>}
+      <div className="watermark">
+        <a href="http://www.github.com/pgast" style={{ textDecoration: "none" }}>
+          &lt;/&gt; pgast
+        </a>
+      </div>
     </div>
   );
 };

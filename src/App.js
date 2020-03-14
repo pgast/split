@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 
-import WorkView from './components/WorkView';
-import Landing from './components/Landing';
-// import './Styles.css';
 import { Store } from './Store';
+import Landing from './components/Landing';
+import WorkView from './components/WorkView';
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
@@ -15,16 +14,16 @@ export default function App() {
 
   return (
     <>
-     {state.mode === "landing" && <Landing toggleMode={toggleMode} />}
+     {state.mode === "landing" && <Landing toggleMode={toggleMode}/>}
      {state.mode === "workView" && (
-      <WorkView 
-        data={state} 
-        resetData={resetData}
-        toggleMode={toggleMode} 
-        addPersonDispatch={addPerson} 
-        editPersonDispatch={editPerson}
-        deletePersonDispatch={deletePerson} 
-      />
+        <WorkView 
+          data={state} 
+          resetData={resetData}
+          toggleMode={toggleMode} 
+          addPersonDispatch={addPerson} 
+          editPersonDispatch={editPerson}
+          deletePersonDispatch={deletePerson} 
+        />
       )}
     </>
   );

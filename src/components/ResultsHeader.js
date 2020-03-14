@@ -16,15 +16,15 @@ export default function ResultsHeader({ totalCost, costPerPerson, viewMode, setV
           Cost per person <span>${costPerPerson}</span>
         </div>
       </div>
-      <div className="results-header__toggle-lists-btns">
+      <div className="results-header__toggle-lists-buttons">
         <div
-          className={viewMode === "persons" ? "results-btn results-btn--toggle-results results-btn--toggle-results--pressed" : "results-btn results-btn--toggle-results"}
+          className={viewMode === "persons" ? "button results-btn results-btn--toggle-results results-btn--toggle-results--pressed" : "button results-btn results-btn--toggle-results"}
           onClick={viewMode === "persons" ? null : () => setViewMode("persons")}
         >
           PERSONS
         </div>
         <div 
-          className={viewMode === "items" ? "results-btn results-btn--toggle-results results-btn--toggle-results--pressed" : "results-btn results-btn--toggle-results"}
+          className={viewMode === "items" ? "button results-btn results-btn--toggle-results results-btn--toggle-results--pressed" : "button results-btn results-btn--toggle-results"}
           onClick={viewMode === "items" ? null : () => toggleItemsView()}
         >
           ITEMS

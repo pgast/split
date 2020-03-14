@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import ResultsView from "./ResultsView";
 import PeopleList from "./PeopleList";
 import PersonForm from "./PersonForm";
-import "../Styles.css";
+import ResultsView from "./ResultsView";
 
 export default function WorkView({ 
   data, 
@@ -19,7 +18,7 @@ export default function WorkView({
   };
 
   return (
-    <div className="workView">
+    <>
       {view === "peopleList" && (
         <PeopleList 
           data={data} 
@@ -29,7 +28,6 @@ export default function WorkView({
           landing={() => toggleMode("landing")} 
         />
       )}  
-
       {view === "resultsView" && (
         <ResultsView 
           data={data}
@@ -37,7 +35,6 @@ export default function WorkView({
           setView={setView} 
         />
       )}
-
       {view === "personEdit" && (
         <PersonForm 
           personEdit 
@@ -47,7 +44,6 @@ export default function WorkView({
           personToEdit={data.people.personToEdit}
         />
       )}
-
       {view === "personForm" && (
         <PersonForm 
           state={data} 
@@ -57,6 +53,6 @@ export default function WorkView({
           addPersonDispatch={addPersonDispatch} 
         />
       )}
-    </div>
+    </>
   );
 };

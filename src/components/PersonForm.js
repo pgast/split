@@ -1,40 +1,35 @@
 import React, { useState } from "react";
-import ListItem from "./ListItem";
-import FeedbackBanner from "./FeedbackBanner";
-import AddItemForm from "./AddItemForm";
-import NameForm from "./NameForm";
 import Navbar from "./Navbar";
+import NameForm from "./NameForm";
+import ListItem from "./ListItem";
+import AddItemForm from "./AddItemForm";
+import FeedbackBanner from "./FeedbackBanner";
 
 export default function PersonForm({ setView, state, addPersonDispatch, personEdit, personToEdit }) {
-  const [personName, setPersonName] = useState(personEdit ? personToEdit.name : "");
-  const [items, setItems] = useState(personToEdit ? personToEdit.items : []);
   const [itemName, setItemName] = useState("");
   const [itemCost, setItemCost] = useState("");
+  const [errorMsg, setErrorMsg] = useState(false);
   const [editItemName, setEditItemName] = useState("");
   const [editItemCost, setEditItemCost] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
   const [itemEditing, setItemEditing] = useState(false);
   const [addNameForm, setAddNameForm] = useState(personEdit ? false : true);
+  const [items, setItems] = useState(personToEdit ? personToEdit.items : []);
+  const [personName, setPersonName] = useState(personEdit ? personToEdit.name : "");
 
-  let validPersonName = personName === "" ? false : true;
   let validItems = items.length !== 0 ? true : false;
+  let validPersonName = personName === "" ? false : true;
   let validItem = itemName !== "" && (itemCost !== "" && itemCost > 0);
   let validEditItem = editItemName !== "" && (editItemCost !== "" && editItemCost > 0);
   let validInputs = validPersonName && validItems;
-
   let itemIsDuplicate = items.filter(el => el.name === itemName).length === 0 ? false : true;
   let personIsDuplicate = state.people.loggedPersons.filter(el => el.name === personName).length === 0 ? false : true;
 
   const addPerson = (e) => {
     e.preventDefault();
-
     if(personIsDuplicate) {
       setErrorMsg("duplicatePerson");
     } else {
-      const newPerson = {
-        name: personName,
-        items
-      };
+      const newPerson = { name: personName, items };
       addPersonDispatch(newPerson);
       setView("peopleList");
     };
@@ -42,19 +37,13 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
 
   const addItem = (e) => {
     e.preventDefault();
-
     if(itemIsDuplicate) {
       setErrorMsg("duplicateItem");
     } else {
       if(errorMsg) setErrorMsg(false);
-      let newItem = {
-        name: itemName,
-        cost: itemCost
-      };
-  
+      let newItem = { name: itemName, cost: itemCost };
       let newItems = [...items];
       newItems.push(newItem);
-  
       setItems(newItems);
       setItemName("");
       setItemCost("");
@@ -87,14 +76,12 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
   };
 
   const backToPeopleList = () => {
-    if(personEdit) {
-      addPersonDispatch(personToEdit);
-    };
+    if(personEdit) { addPersonDispatch(personToEdit) };
     setView("peopleList") 
   };
 
   return (
-    <div className="view-container">
+    <div className="view-container person-form">
       <Navbar 
         type="personForm"
         addPerson={addPerson}
@@ -102,7 +89,7 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
         validInputs={validInputs}
         backToPeopleList={backToPeopleList}
       />
-      <div className="form_content">
+      <div className="person-form__content">
         <NameForm 
           personName={personName}
           addNameForm={addNameForm}
@@ -112,14 +99,13 @@ export default function PersonForm({ setView, state, addPersonDispatch, personEd
           personIsDuplicate={personIsDuplicate}
         />
         {!addNameForm && (
-          <div className="item_container">
+          <div className="person-form__content__items-container">
             {(errorMsg === "duplicateItem" && items.length !== 0) && (
               <FeedbackBanner type={errorMsg} toggleErrorMsg={() => setErrorMsg(false)} />
             )}
             {errorMsg === "duplicatePerson" && (
               <FeedbackBanner type={errorMsg} toggleErrorMsg={() => setErrorMsg(false)} />
             )}
-            {/* if errorMsg is false BUSCAR CONDICIONAL*/}
             {!errorMsg && (
               <AddItemForm 
                 addItem={addItem}

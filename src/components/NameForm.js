@@ -5,9 +5,9 @@ export default function NameForm({ addNameForm, personName, setPersonName, valid
   useEffect(() => { textInput.focus() }, []);
 
   return (
-    <div className={addNameForm ? "form_add_name_full" : "form_add_name_small"}>
-      <div className="name_input_container">
-        <div className={addNameForm ? "name_message" : "name_message name_message_small"}>
+    <div className={addNameForm ? "name-form--full" : "name-form--small"}>
+      <div className="name-form__input-container">
+        <div className={addNameForm ? "name-form__input__name-message" : "name-form__input__name-message--small"}>
           {addNameForm ? 
             (personIsDuplicate ? "That name already exists" : "Who bought this items?") :
             "Adding items bought by"
@@ -20,15 +20,15 @@ export default function NameForm({ addNameForm, personName, setPersonName, valid
           ref={(text) => { textInput = text; }}
           onChange={(e) => setPersonName(e.target.value)}
           className={addNameForm ? 
-            (personIsDuplicate ? "person_input person_input--error" : "person_input") : 
-            "person_input person_input_small"
+            (personIsDuplicate ? "name-form__person-input name-form__person-input--error" : "name-form__person-input") : 
+            "name-form__person-input name-form__person-input--small"
           }
         />
       </div>
       {addNameForm && (
         <div 
         onClick={() => (validPersonName && !personIsDuplicate) ? setAddNameForm(false) : null}
-        className={(validPersonName && !personIsDuplicate) ? "add-person-btn" : "add-person-btn-disabled"} 
+        className={(validPersonName && !personIsDuplicate) ? "button add-person-btn" : "button add-person-btn-disabled"} 
         >
           <h3>Add Items</h3>
         </div>

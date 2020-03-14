@@ -5,16 +5,16 @@ import Navbar from "./Navbar";
 export default function PeopleList({ setView, landing, data, deletePerson, editPerson }) {
   const validLoggedPersons = data.people.loggedPersons.length >= 1 ? true : false;
   return (
-    <div className="view-container">
+    <div className="view-container people-list">
       <Navbar 
         type="peopleList"
         landing={() => landing()}
         setView={() => setView("resultsView")}
         validLoggedPersons={validLoggedPersons}
       />
-      <div className="content">
+      <div className="people-list__content-container">
         {validLoggedPersons && (
-          <div className="people-container">
+          <div className="people-list__content-container--people">
             {data.people.loggedPersons.map(el => 
               <Person 
                 data={el}
@@ -28,7 +28,7 @@ export default function PeopleList({ setView, landing, data, deletePerson, editP
         )}
         <div 
           onClick={() => setView("personForm")}
-          className={validLoggedPersons ? "add-person-btn add-person-btn-bottom" : "add-person-btn"} 
+          className={validLoggedPersons ? "button add-person-btn add-person-btn-bottom" : "button add-person-btn"} 
         >
           <h3>Add Person</h3>
         </div>

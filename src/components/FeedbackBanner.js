@@ -3,39 +3,23 @@ import React from "react";
 export default function FeedbackBanner({ type, toggleErrorMsg }) {
   return (
     <>
-      {type === "duplicateItem" && (
-        <div className="banner_duplicate_item">
-          <div className="banner_duplicate_item_text">
-              An item with that name already exists, try a different name
+      {(type === "duplicatePerson" || type === "duplicateItem") && (
+        <div className="feedback-banner--duplicate-item">
+          <div className="feedback-banner--duplicate-item__text">
+            {type === "duplicateItem" ? "An item" : "A person"} with that name already exists, try a different name
           </div>
           <div 
             onClick={toggleErrorMsg} 
-            className="add-item-btn banner_duplicate_item_btn"
+            className="button add-item-btn banner_duplicate_item_btn"
           >
             Ok
           </div>
         </div>
       )}
-
-      {type === "duplicatePerson" && (
-        <div className="banner_duplicate_item">
-          <div className="banner_duplicate_item_text">
-              A person with that name already exists, try a different name
-          </div>
-          <div 
-            onClick={toggleErrorMsg} 
-            className="add-item-btn banner_duplicate_item_btn"
-          >
-            Ok
-          </div>
-        </div>
-      )}
-
-
       {type === "no_people" && (
-        <div className="banner_no_people">
+        <div className="feedback-banner--no-person">
           <h3>No Items</h3>
-          <h4>Start adding using the form above</h4>
+          <h4 className="feedback-banner--no-person__text">Start adding using the form above</h4>
         </div>
       )}
     </>

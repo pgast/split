@@ -12,19 +12,25 @@ export default function ResultsPersonsList({
   const personIsOwed = expensePerPerson > costPerPerson;
 
   const personDebtClass = isExpanded ? 
-    "results__person-card__info--status--expanded" :
+    "results-persons-list__card-info--expanded" :
     (personIsOwed ? 
-      "results__person-card__info--status--is-owed" :
-      "results__person-card__info--status"
+      "results-persons-list__card-info--is-owed" :
+      "results-persons-list__card-info"
     );  
   
   return (
     <div 
       onClick={personDetailsToggle} 
-      className={isExpanded ? "list_item list_item--show" : "list_item list_item-person--results"}
+      className={isExpanded ? "list-item list-item--show" : "list-item list-item__person--results"}
     >
-      <div className={isExpanded ? "results__person-card__info-row results__person-card__info-row--expanded" : "results__person-card__info-row"}>
-        <div className={isExpanded ? "results__person-card__info--name results__person-card__info--name--expanded" : "results__person-card__info--name"}>
+      <div className={isExpanded ? 
+        "results-persons-list__card-info__row results-persons-list__card-info__row--expanded" : 
+        "results-persons-list__card-info__row"
+      }>
+        <div className={isExpanded ? 
+          "results-persons-list__card-info__name results-persons-list__card-info__name--expanded" : 
+          "results-persons-list__card-info__name"
+        }>
           {person.name.charAt(0).toUpperCase() + person.name.substring(1)} 
         </div>
         <div className={personDebtClass}>
@@ -32,12 +38,11 @@ export default function ResultsPersonsList({
         </div>
         <i className={isExpanded ? "fa fa-caret-up" : "fa fa-caret-down"}></i>
       </div>
-
       {isExpanded && (
-        <div className="results__person-card--expanded__info-content">
-          <div className="results__person-card--expanded__info-paid">PAID ${expensePerPerson}</div>
+        <div className="results-persons-list__card--expanded__info--content">
+          <div className="results-persons-list__card--expanded__info--paid">PAID ${expensePerPerson}</div>
           {person.items.map(item => (
-            <div key={item.name} className="results__person-card--expanded__info-items">
+            <div key={item.name} className="results-persons-list__card--expanded__info--items">
               {item.name.charAt(0).toUpperCase() + item.name.substring(1)}  -  ${item.cost}
             </div>
           ))}
