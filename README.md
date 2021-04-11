@@ -8,8 +8,7 @@
 • Users log the person and the items bought.\
 • App splits all the expenses among the users and gives a detailed list with each person listed with the amount owed or the amount they currently have to pay.
 
-[**Try it now!**](http://s-plit.herokuapp.com/) 
-(*Heroku throttles down speed for inactive applications, as the app is hosted on heroku it might take a while to load.*)
+[**Try it now!**](http://s-plit.surge.sh) 
 
 ## Installation
 [(Back to top)](#split)  
