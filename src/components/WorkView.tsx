@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import PeopleList from "./PeopleList";
 import PersonForm from "./PersonForm";
 import ResultsView from "./ResultsView";
+import { StateTypes } from "../Store";
+
+interface Props {
+  data: StateTypes,
+  resetData: () => void,
+  toggleMode: () => void,
+  addPersonDispatch: () => void,
+  editPersonDispatch: () => void,
+  deletePersonDispatch: () => void
+}
+
+type Views = "peopleList" | "resultsView" | "personEdit" | "personForm";
 
 export default function WorkView({ 
   data, 
@@ -10,9 +22,9 @@ export default function WorkView({
   addPersonDispatch, 
   editPersonDispatch, 
   deletePersonDispatch, 
-}) {
-  const [view, setView] = useState("peopleList");
-  const reset = () => {
+}: Props) {
+  const [view, setView] = useState<Views>("peopleList");
+  const reset = (): void => {
     resetData();
     toggleMode("landing");
   };

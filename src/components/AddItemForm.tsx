@@ -1,5 +1,14 @@
 import React from "react";
 
+interface Props {
+  itemName: string,
+  setItemName: () => void,
+  itemCost: ,
+  setItemCost: ,
+  validItem: ,
+  addItem: 
+}
+
 export default function AddItemForm({ itemName, setItemName, itemCost, setItemCost, validItem, addItem }) {
   return (
     <div className="add-item-form">

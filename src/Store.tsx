@@ -1,6 +1,31 @@
 import React, { useReducer, createContext } from "react";
 
-const initialState = {
+export interface Item {
+  name: string,
+  cost: number
+}
+
+export interface Person {
+  name: string,
+  items: Item[]
+}
+
+export interface StateTypes {
+  mode: string,
+  people: {
+    loggedPersons: Person[],
+    personToEdit: undefined | Person
+  }
+}
+
+export type ActionTypes = 
+  | { type: "TOGGLE_MODE", payload: string }
+  | { type: "ADD_PERSON", payload: Person }
+  | { type: "EDIT_PERSON", payload: string}
+  | { type: "DELETE_PERSON", payload: string }
+  | { type: "RESET_DATA" }
+
+const initialState: StateTypes = {
   mode: "landing",
   people: {
     loggedPersons: [],
@@ -8,8 +33,8 @@ const initialState = {
   }
 };
 
-function reducer (state, action) {
-  let newLoggedPersons;
+function reducer (state: typeof initialState, action: ActionTypes): StateTypes {
+  let newLoggedPersons: Person[];
   switch (action.type) {
     case 'TOGGLE_MODE':
       return { ...state, mode: action.payload };
@@ -32,10 +57,22 @@ function reducer (state, action) {
   };
 };
 
-export function StoreProvider (props) {
+export function StoreProvider (props: any) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const value = { state, dispatch }
   return <Store.Provider value={value}>{props.children}</Store.Provider>
 }
 
-export const Store = createContext();
+// Revisar esto despues
+// export const Store = createContext<any | undefined>(undefined);
+// export const Store = createContext<StateTypes>(initialState);
+// export const Store = createContext<[StateTypes, React.Dispatch<any>] | undefined>(undefined);
+
+
+export const Store = createContext<{
+  state: StateTypes;
+  dispatch: React.Dispatch<any>;
+}>({
+  state: initialState,
+  dispatch: () => null
+});
